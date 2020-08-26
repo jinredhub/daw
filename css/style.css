@@ -1,0 +1,995 @@
+
+/*utilities-------------------------*/
+.padding-inputEl{
+    padding: 5px 20px;
+  }
+  
+  .padding-nav, .space3{
+      padding-top: 84px;
+  }
+  .padding-nav-short, .space2{
+      padding-top: 60px;
+  }
+  .padding-nav-shorter, .space1{
+      padding-top: 40px;
+  }
+  .padding-space3{
+    padding-top: 84px;
+  }
+  .padding-space2{
+    padding-top: 60px;
+  }
+  .padding-space3{
+    padding-top: 40px;
+  }
+  
+  .padding-0{
+      padding: 0;
+  }
+  .padding-1{
+      padding:10px;
+  }
+  .padding-2{
+      padding: 20px;
+  }
+  
+  .padding-left-0{
+      padding-left: 0;
+  }
+  .padding-left-1{
+      padding-left: 10px;
+  }
+  .padding-left-2{
+    padding-left: 20px;
+  }
+  .padding-left-3{
+    padding-left: 30px;
+  }
+  .padding-left-4{
+    padding-left: 40px;
+  }
+  .padding-left-5{
+    padding-left: 50px;
+  }
+  .padding-left-6{
+    padding-left: 60px;
+  }
+
+  .padding30{
+    padding-bottom: 30px;
+  }
+  .padding50{
+    padding-bottom: 50px;
+  }
+  
+  .padding-right-0{
+      padding-right: 0;
+  }
+  .padding-right-1{
+      padding-right: 10px;
+  }
+  .padding-right-2{
+      padding-right: 20px;
+  }
+  .padding-top-0{
+      padding-top: 0;
+  }
+  .padding-top-1{
+      padding-top: 10px;
+  }
+  .padding-top-2{
+      padding-top: 20px;
+  }
+  .padding-bottom-0{
+      padding-bottom: 0;
+  }
+  .padding-bottom-1{
+      padding-bottom: 10px;
+  }
+  .padding-bottom-2{
+      padding-bottom: 20px;
+  }
+  .padding-lr-0{
+      padding-left: 0;
+      padding-right: 0;
+  }
+  .padding-lr-1{
+      padding-left: 10px;
+      padding-right: 10px;
+  }
+  .padding-lr-2{
+       padding-left: 20px;
+       padding-right: 20px;
+  }
+  .padding-lr-p1{
+      padding-left: 5%;
+      padding-right: 5%;
+  }
+  .padding-tb-5-10{
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+  .padding-tb-1{
+      padding-left: 5px;  
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .padding-tb-2{
+      padding-top: 20px;
+      padding-bottom: 20px;
+  }
+  .margin-lr-1{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .margin-lr-2{
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .margin-left-1{
+    margin-left: 10px;
+  }
+  .margin-left-2{
+    margin-left: 20px;
+  }
+  .margin-bottom-0{
+      margin-bottom: 0;
+  }
+  .margin-bottom-1{
+      margin-bottom: 10px;
+  }
+  .margin-bottom-2{
+      margin-bottom: 20px;
+  }
+  
+  .border-bottom-0{
+    border-bottom: none;
+  }
+  
+  .inputFormUnderline{
+    border-radius: 0;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    box-shadow: none;
+  }
+  
+  
+  .disp-none{
+    display: none;
+  }
+  .disp-block{
+    display: block;
+  }
+  .disp-inline{
+    display: inline;
+  }
+  .disp-inline-block{
+    display: inline-block;
+  }
+  .disp-flex{
+    display: flex;
+  }
+  
+  .flex-dir-col{
+    flex-direction: column;
+  }
+  .flex-dir-row{
+    flex-direction: row;
+  }
+  .justify-content--center{
+    justify-content: center;
+  }
+  .justify-content--end{
+    justify-content: flex-end;
+  }
+  .justify-content--start{
+    justify-content: flex-start;
+  }
+  .justify-content--space-between{
+    justify-content: space-between;
+  }
+  .justify-content--spaceBetween {
+    justify-content: space-between;
+  }
+  
+  .align-items--center{
+    align-items: center;
+  }
+  .align-items--flex-end{
+    align-items: flex-end;
+  }
+  .align-self--start{
+    align-self: start;
+  }
+  .align-self--end{
+    align-self: flex-end;
+  }
+  .align-items--flex-start{
+    align-items: flex-start;
+  }
+  
+  .flex-wrap{
+      flex-wrap: wrap;
+  }
+
+  
+  
+  /*flex-item*/
+  .flex-100{
+    flex: 1 1 100%;
+  }
+  .flex-95{
+    flex: 1 1 95%;
+  }
+  .flex-85{
+    flex: 1 1 85%;
+  }
+  .flex-80 {
+    flex: 1 1 80%;
+  }
+  .flex-75{
+    flex: 1 1 75%;
+  }
+  .flex-40{
+    flex: 1 1 40%;
+  }
+  .flex-50{
+    flex: 1 1 50%;
+  }
+  .flex-66{
+    flex: 1 1 66%;
+  }
+  .flex-60{
+    flex: 1 1 60%;
+  }
+  .flex-66{
+    flex: 1 1 66.6%;
+  }
+  .flex-33{
+    flex: 1 1 33.3%;
+  }
+  .flex-25{
+    flex: 1 1 25%;
+  }
+  .flex-20{
+    flex: 1 1 20%;
+  }
+  .flex-15{
+    flex: 1 1 15%;
+  }
+  .flex-10{
+    flex: 1 1 10%;
+  }
+  .flex-5{
+    flex: 1 1 5%;
+  }
+  .flex-1 {
+    flex: 1;
+  }
+
+  .text-align-center{
+    text-align: center;
+}
+.text-align-right{
+    text-align: right;
+}
+  
+  .bold{
+    font-weight: bold;
+  }
+  .heavy{
+    font-weight: 900;
+  }
+  .smallText{
+    font-size: 12px;
+  }
+  
+  
+  .width-100{
+    width: 100%;
+  }
+  .w100{
+    width: 100px;
+  }
+  .w150{
+    width: 150px;
+  }
+  .w200{
+    width: 200px;
+  }
+  
+  .h80{
+      height: 80px;
+  }
+  .h100{
+      height: 100px;
+  }
+  .h150{
+      height: 150px;
+  }
+  .h200{
+      height: 200px;
+  }
+  
+  
+  .text-primary{
+      color: #F59D18;
+  }
+  .text-white{
+      color: white;
+  }
+  .text-gray{
+      color: #bbbbbb;
+  }
+  .text-grayF2{
+      color: #F2F2F2;
+  }
+  .bg-primary{
+      background: #F59D18;
+  }
+  .bg-grayF2{
+    background: #F2F2F2;
+  }
+  
+  
+  .saveButtonContainer{
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  
+  .invalid-feedback{
+    display: none;
+  }
+  .is-error ~ .invalid-feedback{
+    display: block;
+    color: red;
+  }
+  
+  /*messages*/
+  .noteMessage, .message{
+    padding: 10px 20px;
+    margin: 16px 0;
+    border: 1px solid gray;
+    border-radius: 5px;
+    color: #5b5b5b;
+    background-color: #f2f2f2;
+  }
+  .message-warning{
+    background-color: #fff3cd;
+    border-color: #ffeaaa;
+  }
+  .message-danger{
+    background-color: #ffd8d8;
+    border-color: #ff9191;
+  }
+  .message-success{
+    background-color: #ccffc1;
+    border-color: #7bd468;
+  }
+  .message-info{
+    background-color: #c1fffe;
+    border-color: #68d4cb;
+  }
+  /*end messages*/
+  
+  .alertMeessage, .alertMessage{
+    padding: 10px 20px;
+    margin-top: 20px;
+    border: 1px solid #fff3cd;
+    border-radius: 5px;
+    color: #5b5b5b;
+    background-color: #ffeaaa;
+  }
+  
+  .fontSize-1{
+    font-size: 1.1rem;
+  }
+  
+  .req::after{
+    content: '*';
+    /*font-size: 1.7rem;*/
+    color: red;
+    padding-left: 5px;
+    font-weight: bold;
+  }
+  
+  /*custom checkbox or radiobutton (square dark-green checkbox)--------------*/
+  /* Customize the label (the container) */
+  .checkBoxContainer {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    padding-top: 0.3rem;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+  /* Hide the browser's default checkbox */
+  .checkBoxContainer input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0.1px;
+    width: 0.1px;
+    overflow: hidden;
+    z-index: -1
+  }
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #f7f7f7;
+    border: 2px solid #ced4da;
+    border-radius: 4px;
+  }
+  
+  /* On mouse-over, add a grey background color */
+  .checkBoxContainer:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+  /* When the checkbox is checked, add a  background color */
+  .checkBoxContainer input:checked ~ .checkmark {
+    background-color: white;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  /* Show the checkmark when checked */
+  .checkBoxContainer input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  /* Style the checkmark/indicator */
+  .checkBoxContainer .checkmark:after {
+    left: 8px;
+    top: 4px;
+    width: 5px;
+    height: 10px;
+    border: solid #F59D18;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  /*add outline when navigating with keyboard*/
+  .checkBoxContainer input:focus ~ .checkmark {
+    border-color: #ffe480;
+    box-shadow: inset 0 1px 1px rgba(0,0,0, .075) ,0 0 8px rgba(107, 107, 107, 0.6);
+  }
+  /*end custom checkbox or radiobutton (square dark-green checkbox)--------------*/
+  
+  /*custom radiobutton - circle (use custom checkbox or radiobutton class '.checkBoxContainer' and this class)---------------------------*/
+  .radioCircle .checkmark{
+    border-radius: 50%;
+  }
+  /* When the checkbox is checked, add a  background color */
+  .radioCircle input:checked ~ .checkmark {
+    background-color: #F59D18;
+  }
+  .radioCircle .checkmark:after{
+    width: 0.1px;
+    height: 0.1px;
+    border-color: #F59D18;
+  }
+  /*end custom radiobutton (circle)*/
+  
+  /*custom input file---------------*/
+  .inputfile{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+  .inputfile + label {
+    font-size: 1rem;
+    font-weight: normal;
+    color: white;
+    background-color: #e67474;
+    display: inline-block;
+    padding: 8px 26px;
+    /* border: 1px solid #878786; */
+    text-align: center;
+    border-radius: 100px;
+    cursor: pointer;
+  }
+  
+  .inputfile:focus + label,
+  .inputfile + label:hover {
+    background-color: #de6d6d;
+    color: white;
+  }
+  
+  .inputfile:focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+  }
+  .inputfile + label * {
+    pointer-events: none;
+  }
+  /*end custom input file--------------*/
+  
+  .inputfileattachment + label{
+    padding: 10px;
+    border: none;
+    border-radius: 50%;
+  }
+  .inputfileattachment:focus + label,
+  .inputfileattachment + .fileUpload:hover {
+    background: transparent;
+    cursor: pointer;
+  }
+  
+  /*custom checkbox input (For intake symptoms) --------------*/
+  input[type=checkbox].buttonLikeCheckbox{
+    /*display: none;*/
+    /*margin: 10px;*/
+    position: absolute;
+    opacity: 0;
+    height: 0.1px;
+    width: 0.1px;
+    overflow: hidden;
+    z-index: -1;
+  }
+  input[type=checkbox].buttonLikeCheckbox + label{
+    display:inline-block;
+    margin: 0 5px;
+    padding: 6px 2px;
+    background-color: white;
+    border: 1px solid #878786;
+    font-size: 1rem;
+    text-align: center;
+    border-radius: 3px;
+  }
+  
+  input[type=checkbox].buttonLikeCheckbox:checked + label {
+    background-color:#F59D18;
+    color: white;
+  }
+  input[type=checkbox].buttonLikeCheckbox:hover + label {
+    background-color: #E8891C;
+    color: white;
+  }
+  input[type=checkbox].buttonLikeCheckbox:active + label {
+    background-color: #d17729;
+    color: white;
+  }
+  /*add outline when navigating with keyboard*/
+  input[type=checkbox].buttonLikeCheckbox:focus + label{
+    border-color: #5f5f5f;
+    box-shadow: inset 0 1px 1px rgba(0,0,0, .075) ,0 0 8px rgba(107, 107, 107, 0.6);
+  }
+  /*end custom checkbox input--------------------*/
+  
+  /*custom radio button -------------------------*/
+  input[type=radio].buttonLikeRadio, input[type=radio].buttonLikeRadio-1, input[type=radio].buttonLikeRadio-2, input[type=radio].buttonLikeRadio-3, input[type=radio].buttonLikeRadio-4, input[type=radio].buttonLikeRadio-5, input[type=radio].buttonLikeRadio-6, input[type=radio].buttonLikeRadio-7{
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+  input[type=radio].buttonLikeRadio + label, input[type=radio].buttonLikeRadio-1 + label, input[type=radio].buttonLikeRadio-2 + label, input[type=radio].buttonLikeRadio-3 + label, input[type=radio].buttonLikeRadio-4 + label, input[type=radio].buttonLikeRadio-5 + label, input[type=radio].buttonLikeRadio-6 + label, input[type=radio].buttonLikeRadio-7 + label{
+    display:inline-block;
+    margin: 0 -2px;
+    padding: 8px 0px;
+    background-color: white;
+    border: 1px solid #dcdada;
+    font-size: 16px;
+    text-align: center;
+    color: rgba( 56, 67, 81, 0.75);
+  }
+  
+  input[type=radio].buttonLikeRadio:checked + label, input[type=radio].buttonLikeRadio-1:checked + label, input[type=radio].buttonLikeRadio-2:checked + label, input[type=radio].buttonLikeRadio-3:checked + label, input[type=radio].buttonLikeRadio-4:checked + label, input[type=radio].buttonLikeRadio-5:checked + label, input[type=radio].buttonLikeRadio-6:checked + label, input[type=radio].buttonLikeRadio-7:checked + label {
+    background-color:#eeeeee;
+    color: rgba( 56, 67, 81, 0.75);
+  }
+  input[type=radio].buttonLikeRadio:hover + label, input[type=radio].buttonLikeRadio-1:hover + label, input[type=radio].buttonLikeRadio-2:hover + label, input[type=radio].buttonLikeRadio-3:hover + label, input[type=radio].buttonLikeRadio-4:hover + label, input[type=radio].buttonLikeRadio-5:hover + label, input[type=radio].buttonLikeRadio-6:hover + label, input[type=radio].buttonLikeRadio-7:hover + label {
+    background-color: #dedcdc;
+    color: rgba( 56, 67, 81, 0.75);
+  }
+  input[type=radio].buttonLikeRadio:active + label, input[type=radio].buttonLikeRadio-1:active + label, input[type=radio].buttonLikeRadio-2:active + label, input[type=radio].buttonLikeRadio-3:active + label, input[type=radio].buttonLikeRadio-4:active + label, input[type=radio].buttonLikeRadio-5:active + label, input[type=radio].buttonLikeRadio-6:active + label, input[type=radio].buttonLikeRadio-7:active + label, input[type=radio].buttonLikeRadio-1:active:focus + label, input[type=radio].buttonLikeRadio-2:active:focus + label, input[type=radio].buttonLikeRadio-3:active:focus + label, input[type=radio].buttonLikeRadio-4:active:focus + label, input[type=radio].buttonLikeRadio-5:active:focus + label, input[type=radio].buttonLikeRadio-6:active:focus + label, input[type=radio].buttonLikeRadio-7:active:focus + label  {
+    background-color: #cfcfcf;
+    color: rgba( 56, 67, 81, 0.75);
+  }
+  input[type=radio].buttonLikeRadio:focus + label, input[type=radio].buttonLikeRadio-1:focus + label, input[type=radio].buttonLikeRadio-2:focus + label, input[type=radio].buttonLikeRadio-3:focus + label, input[type=radio].buttonLikeRadio-4:focus + label, input[type=radio].buttonLikeRadio-5:focus + label, input[type=radio].buttonLikeRadio-6:focus + label, input[type=radio].buttonLikeRadio-7:focus + label{
+    /* border-color: #5f5f5f; */
+    /* box-shadow: inset 0 1px 1px rgba(0,0,0, .075) ,0 0 8px rgba(107, 107, 107, 0.6); */
+  }
+  .round-right-border{
+    border-radius: 0 5px 5px 0;
+  }
+  .round-left-border{
+    border-radius: 5px 0 0 5px;
+  }
+  /*end custom radio button------------------------------*/
+  
+  /*custom table--------------------------------------*/
+  .myTable{
+    width: 100%;
+  }
+  .myTable th, .myTable td{
+    text-align: left;
+    padding: 20px 10px;
+  }
+  .myTable tbody > tr:nth-last-of-type(odd){
+    background-color: rgba(220, 220, 220, 0.5);
+  }
+  /*end custom table-----------------------------------*/
+
+  /* buttons -------------------------------------*/
+.btn{
+    border: none;
+    padding: 10px 24px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 4px;
+    color: black;
+    background-color: #dddddd;
+    display: inline-block;
+}
+.btn:hover{
+    background-color: #cccccc;
+}
+.btn-primary{
+    color: white;
+    background-color: #e67474;
+    /* font-weight: bold; */
+}
+.btn-primary:hover{
+    background-color: #de6d6d;
+}
+.btn-primary:active, .btn-primary:focus, .btn-primary:active:focus, .btn-primary:active:hover{
+    background-color: #d96666;
+}
+
+.btn-danger{
+    color: white;
+    background-color: #ef4545;
+}
+.btn-danger:hover{
+    background-color: #d83636;
+}
+.btn-danger:active, .btn-danger:focus, .btn-danger:active:focus, .btn-danger:active:hover{
+    background-color: #bf2a2a;
+}
+  /* end buttons -------------------------------------*/
+
+  /* form -------------------------------------------- */
+    .form-cont{
+        display: block;
+        width: 100%;
+        padding: 6px 12px;
+        font-size: 1rem;
+        color: #495057;
+        background-color: white;
+        border: 2px solid #ced4da;
+        border-radius: 5px;
+    }
+
+    .form-cont:focus{
+        border-color: #ced4da;
+        box-shadow: none;
+        outline: 0;
+    }
+    label{
+        display: inline-block;
+        margin-bottom: .5rem;
+    }
+  /* end form----------------------------------------- */
+
+  /* link--------------------------------------------- */
+  .link{
+    color: #98b31a;
+    text-decoration: none;
+    font-weight: bold;
+    text-decoration: none;
+}
+.link:hover{
+    text-decoration: underline;
+}
+  /* end link----------------------------------------- */
+
+
+  h1,
+  .h1,
+  h2,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
+  h5,
+  .h5,
+  h6,
+  .h6
+  {
+      margin-top: 0;
+  }
+
+/* gogle fonts-------------------------------------*/
+
+
+/* import font locally -----------------------------*/
+@font-face{
+    font-family: myHelvetivaLight;
+    src: url(../images/fonts/helvetica-light.ttf);
+}
+body{
+    font-family: 'Helvetica', sans-serif;
+}
+/*google fonts-------------------------------------*/
+
+/* form */
+    .form-footer{
+        display: none !important;
+    }
+/* end form */
+
+/* for kena.ai-------------------------------------- */
+.form-cont-line{
+    display: block;
+    width: 100%;
+    padding: 16px 0;
+    font-size: 1rem;
+    color: #495057;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ced4da;
+    border-radius: 0;
+}
+.form-cont-line:focus{
+    /* border-color: #ffe480; */
+    /* box-shadow: 0 0 0 0.1rem rgba(255, 153, 0, 0.25); */
+    border-bottom: 1px solid black;
+    outline: 0;
+}
+
+.link{
+    color: #e67474;
+    text-decoration: none;
+    font-weight: bold;
+    text-decoration: none;
+}
+.link:hover{
+    text-decoration: underline;
+}
+/* button */
+.btn-long{
+    width: 100%;
+}
+.btn{
+    border-radius: 100px;
+}
+
+.hide-desktop{
+    display: none !important;
+}
+
+/* end for kena.ai */
+
+
+/*media query----------------------------------------*/
+/*tablets*/
+@media (max-width: 768px){
+    .hide-tablet{
+        display: none !important;
+    }
+    .show-tablet{
+        display: block !important;
+    }
+    .show-tablet-flex{
+        display: flex !important;
+    }
+}
+/*before gets to smartphones*/
+@media (max-width: 590px){
+    .hide-mobile{
+        display: none !important;
+    }
+    .show-mobile{
+        display: block !important;
+        width: 100%;
+    }
+    .show-mobile-flex{
+        display: flex !important;
+    }
+}
+  /*end media query------------------------------------*/
+  
+
+  /* /////////////////////////////////////////////////// */
+  /* ////////////////////// for kena ////////////////// */
+  /* ///////////////////////////////////////////////// */
+
+    .appLikeMobileNav{
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        z-index: 99;
+        width: 100%;
+        justify-content: space-around;
+        background-color: white;
+        border-top: 1px solid #cdcdcd;
+        padding: 16px 0 30px 0;
+
+    }
+    .appLikeMobileNav .faIcons{
+        color: #bebebe;
+        font-size: 22px;
+    }
+    .appLikeMobileNav .faIcons.active{
+        color: #e67474;
+    }
+
+    /* hamvurger popup */
+    .mobileNavContainer{
+        background-color: transparent;
+        position: relative;
+        display: none;
+    }
+    .appLikeMobileNav .myNavLinks{
+        display: none;
+        position: absolute;
+        width: 100%;
+        bottom: 100%;
+        left: 0;
+        background-color: white;
+        border-radius: 10px 10px 0 0;
+        padding: 26px 0;
+    }
+    .myNavLinks img{
+        width: 50%;
+        max-width: 160px;
+    }
+    .myNavLinksLogoDiv{
+        text-align: center;
+        padding: 10px;
+    }
+    .myNavLinksItem{
+        display: flex;
+        align-items: center;
+    }
+    .myNavLinksItem .popupFaIcons{
+        width: 60px;
+        color: #727272;
+    }
+    .myNavLinksItem a{
+        flex-grow: 1;
+    }
+    .metalOpuseLink{
+        display: none;
+    }
+
+    .myNavLinksItem a{
+        color: #727272;
+        padding: 18px 16px 18px 0;
+        text-decoration: none;
+        font-size: 17px;
+        display: block;
+        border-bottom: 1px solid #e6e6e6;
+    }
+    .myNavLinksItem a.lstChildEl{
+        border-bottom: none;
+    }
+    .appLikeMobileNav .navHamburgerIcon:active .faIcons{
+        color : black;
+    }
+    .appLikeMobileNav .myNavLinks a:active{
+        background-color: #d1d1d1;
+    }
+
+    .grayBgForMobileNavBar{
+        display: none;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(32, 32, 32, 0.7);
+        z-index: 98;
+        position: fixed;
+    }
+
+
+    /* modal============================================== */
+    .allModal{
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.6);
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 10;
+        overflow: auto;
+        /* text-align: center; */
+    }
+    .allModal .all-modal-content{
+        background-color: white;
+        padding: 38px 30px;
+        width: 90%;
+        font-size: 16px;
+        box-shadow: 1px 1px 20px 2px;
+        border-radius: 10px;
+        max-width: 500px;
+        min-width: 165px;
+        /* top: 50%; */
+        /* transform: translateY(-50%); */
+        position: relative;
+        display: inline-block;
+        text-align: left;
+    }
+    .allModal .modalHeader{
+        margin-bottom: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+    .allModal .modal .buttonDiv{
+        padding-top: 20px;
+        text-align: center;
+    }
+    .allModal .allButtonDiv{
+        padding-top: 20px;
+        text-align: center;
+    }
+    /* end modal============================================== */
+
+
+    /* ajax message ==========================================*/
+    .ajaxAlertMessage{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        margin-top: 0;
+        display: none;
+        z-index: 100;
+    }
+    /* end ajax message ==========================================*/
+
+    /* sign up button for guest and support@kena.ai ================ */
+    .signupButtonForGuest{
+        background-color: #e67474;
+        border: none;
+        border-radius: 100px;
+        color: white;
+        position: absolute;
+        right: 20px;
+        padding: 6px 34px;
+        display: none;
+    }
+    /* end sign up button for guest and support@kena.ai ================ */
+
+    /* top sign up button for mobile ================*/
+    .mobileGuestSignUpDiv{
+        display: none;
+    }
+    /* end top sign up button for mobile ================*/
+
+    /* make signup visible while hamburger icon is open =============== */
+    #signUpForGuestModal{
+        z-index: 99;
+    }
+    /* end make signup visible while hamburger icon is open =============== */

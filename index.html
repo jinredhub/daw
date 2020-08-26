@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="keywords"
+        content="web, web design, web development, developer, freelance, freelancer, front-end, job, Jin Redmond, San Francisco, bay area, WEBデザイン,　ディレクション, Webサイト作成、　ウェブサイト、　作成">
+    <meta name="description" content="Multifunctional designer/fontend developer based in San Francisco">
+    <title>Digital Audio Workstation</title>
+    <!-- favicon -->
+    <!-- <link rel="shortcut icon" href="./images/favicon.ico"> -->
+    <!-- google fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+    <!-- font awesome -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+    <!-- normalize -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <!-- moment js -->
+    <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.4.0.min.js"
+    integrity="sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=" crossorigin="anonymous"></script>
+    <!-- wavesurfer.js audio waveform visualization -->
+    <script src="https://unpkg.com/wavesurfer.js"></script>
+    <!-- d3 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.16.0/d3.min.js"></script>
+
+    <!-- css -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/mainStyle.css">
+
+</head>
+
+<body>
+    <!-- <input id="files" 
+        type="file" 
+        name="files[]" 
+        accept="audio/*" 
+        multiple 
+        onchange="handleFilesSelect(this)" /> -->
+
+    <div id='navbar'>
+        <a href="#">Arpeggios</a>
+        <a href="#" class='active'>DAW</a>
+    </div>
+
+    <section>    
+        <div class="tabcontent">
+            <div>
+                <span style='font-size: 24px; font-weight: bold;'>DAW </span>
+                <button type='button' id='questionButton'><i class="fas fa-question" style='font-size: 21px; color: #646464;'></i></button>
+            </div>
+        
+            <br>
+            
+            <!-- controller -->
+            <div class='disp-flex justify-content--space-between' id='hideButtonDiv'>
+                <div class='disp-flex topLeftButtonDiv'>    
+                    <input type="file" name="addNewAudioFile" id="addNewAudioFile" class="inputfile" data-multiple-caption="{count} files selected" />
+                    <label for="addNewAudioFile" class='roundButton addNewAudioFileLabel'><span><i class="fas fa-upload"></i></span></label>
+                    
+                    <button type='button' class='btn zoomOut roundButton' disabled><i class="fas fa-search-minus"></i></button>
+                    <button type='button' class='btn zoomIn roundButton' disabled><i class="fas fa-search-plus"></i></button>
+    
+                    <button type='button' id='loadProjectButton'>load</button>
+                </div>
+                <div class='disp-flex topRightButtonDiv'>
+                    <button type='button' id='playWaveFormButton' class='btn roundButton' disabled><i class="fas fa-play" style="font-size: 14px"></i></button>
+                    <button type='button' id='openCombineTracksModal' class='btn roundButton' disabled><i class="fas fa-cloud-upload-alt"></i></button>
+                </div>
+            </div>
+            
+            <div style='position: relative;'>
+                <!-- panel detail -->
+                <div id='trackDetailPanel'>
+                    <div id='trackDetailPanelTopDiv' class='disp-flex justify-content--end align-items--flex-end'>
+                        <button type='button' id='closeTrackDetailPanelButton'><i class="fas fa-chevron-left"></i></button>
+                    </div>
+                    <div id='appendDetailHere'></div>
+                    <div style='height: 50px;'></div>
+                </div>
+    
+                <div id='log'></div>
+    
+                <button type='button' id='showHideTrackDetailPanelButton'><i class="fas fa-chevron-right"></i></button>
+    
+                <div id='mixingContainer'>
+                    <div id="mixingScrollDiv">
+                        <div id='animateThisBarHandle'></div>
+                        <div id='animateThisBar' data-isPlaying='false'></div>
+                        <div id='displayScale'>
+                            <div id='activeTrackDiv'></div>
+                            <div id='trackEndSliderContainer'>
+                                <div id='trackEndSlider'></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+    
+            <div id='temp' style='display: none;'></div>
+    
+        </div>
+    </section>
+    
+
+    <!-- delete track modal -->
+    <div id='deleteTrackModal' class='allModal'>
+        <div class="all-modal-content">
+            <div class='modalHeader'>
+                Are you sure you want to delete <span id='deleteTrackTitle'></span>?
+            </div>
+            <div class='allButtonDiv'>
+                <button type='button' class='btn btn-primary confirmDeleteTrackButton'>Delete</button>
+                <button type='button' class='btn closeDeleteTrackModal'>Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- combineTrack modal -->
+    <div id='combineTrackModal' class='allModal'>
+        <div class="all-modal-content">
+            <div class='modalHeader'>
+                Are you ready to merge all tracks?
+            </div>
+            <div class='allButtonDiv'>
+                <button type='button' class='btn confirmCombineTrackButton'>Yes</button>
+                <button type='button' class='btn closeCombineTrackModal'>No</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- result modal -->
+    <div id='resultModal' class='allModal'>
+        <div class="all-modal-content">
+            <div class='closeModal closeResultModal'>&times;</div>
+            <div class='modalHeader'>
+                <div id='thisDiv'></div>
+            </div>
+            <div class='allButtonDiv'>
+                <div id='processingIcon'><i class="fas fa-spinner fa-spin" style='font-size: 52px;'></i></div>
+                <a class='btn' id='downloadFinalTrack' href="#">donwload <i class="fas fa-arrow-down"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- question modal -->
+    <div id='questionModal' class='allModal'>
+        <div class="all-modal-content">
+            <button type='button' class='closeModal closeQuestionModalButton'><i style='color: #646464;' class="fas fa-times"></i></button>
+            <div class='modalHeader'>
+                DAW
+            </div>
+            <div>Easy to use Digital Audio Workstation that runs in your browser. Upload your audio files, mix them together, export in a single audio file.</div>
+            <div id='builtBy'>Built by Jin Redmond. Source code available <a class='link' href="https://github.com/jinredhub/arpeggios">here</a>.</div>
+        </div>
+    </div>
+    
+    <div id="loading"><i class="fas fa-spinner fa-spin" style='color: #a8a8a8;'></i></div>
+
+    <!-- footer -->
+    <div id='footer' class='disp-flex justify-content--center align-items--center flex-dir-col'>
+        <div style='padding: 0 0 30px 0;'>
+            <a class='btn github' href="https://github.com/jinredhub"><i class="fab fa-github-alt"></i></a>
+        </div>
+        <p>Jin Redmond</p>
+    </div>
+
+    <script src="js/main.js"></script>
+
+</body>
+
+</html>
