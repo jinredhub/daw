@@ -683,18 +683,18 @@ $(document).ready(function(){
                 // console.log('filenamesplit[0]: ', fileNameSplit[0]);
                 // console.log('userid: ', userId);
 
-                let isAcceptableExtension = null;
-                if(fileExtension == "mp3" || fileExtension == "m4a" || fileExtension == "wav"){
-                    isAcceptableExtension = true;
-                }
-                else{
-                    // if wong extansion
-                    // console.log('worng extension');
-                    // alert('Max file size : 3MB. Supported extensions: mp3, m4a, wav');
-                    displayMessage('Max file size : 3MB. Supported extensions: mp3, m4a, wav.', 'message-danger');
+                // let isAcceptableExtension = null;
+                // if(fileExtension == "mp3" || fileExtension == "m4a" || fileExtension == "wav"){
+                //     isAcceptableExtension = true;
+                // }
+                // else{
+                //     // if wong extansion
+                //     // console.log('worng extension');
+                //     // alert('Max file size : 3MB. Supported extensions: mp3, m4a, wav');
+                //     displayMessage('Max file size : 3MB. Supported extensions: mp3, m4a, wav.', 'message-danger');
 
-                    return;
-                }
+                //     return;
+                // }
 
                 // loading icon------------------------------------
                 $('#loading').css('display', 'flex');
