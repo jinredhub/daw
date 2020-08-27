@@ -58,6 +58,7 @@ $(document).ready(function(){
 
             getTrackInfo();
 
+            console.log('audioFiles: ', audioFiles);
             handleFilesSelect(audioFiles);
         }
         else{
@@ -99,7 +100,7 @@ $(document).ready(function(){
         // containerWidth = maxDurationMin * 2800
         // wave container size : see $('.addNewTrack').on('click',
 
-        // fix squashed ticks and change ticks count--------
+        // change ticks count--------
         let tickMultiplier = 0;
         if(globalCurrentZoomLevel >= 0.25 && globalCurrentZoomLevel <= 2){
             tickMultiplier = 50;
@@ -700,7 +701,10 @@ $(document).ready(function(){
 
                 const userFile = e.target.files[0];
 
-                audioFiles.push(userFile);
+                audioFiles.push({
+                    'audioFile': userFile,
+                    'isInputFile': true,
+                });
 
                 var reader = new FileReader();
                 reader.readAsDataURL(userFile); 
@@ -1254,6 +1258,7 @@ $(document).ready(function(){
 
         // update data
         globalMusicTracks.tracks.splice(index, 1);
+        audioFiles.splice(index, 1);
 
         // update ui
         $(`#trackDetail${globalDeleteTrackId}`).remove();
@@ -1461,7 +1466,7 @@ $(document).ready(function(){
                 startPlayPixel: 187,
                 track_start: 2.01576650617079,
 
-                audioFileUrl: '/images/testAudio.mp3',
+                audioFileUrl: './assets/testAudio.mp3',
             },
             {
                 description: 'this is my 2nd track description',
@@ -1483,9 +1488,16 @@ $(document).ready(function(){
                 startPlayPixel: 44,
                 track_start: 0.3431091925397089,
 
-                audioFileUrl: '/images/testAudio.mp3',
+                audioFileUrl: './assets/testAudio.mp3',
             },
         ];
+
+        for(let i=0; i<globalMusicTracks.tracks.length; i++){
+            audioFiles.push({
+                'audioFile': globalMusicTracks.tracks[i].audioFileUrl,
+                'isInputFile': false,
+            });
+        }
 
         loadNewAudioTrack('', '', 'false');
 
@@ -1510,10 +1522,10 @@ $(document).ready(function(){
         const durationPercentage = trackEndSliderPosition / totalDurationPixel;
         // console.log('durationPercentage: ', durationPercentage);
 
-        const totalDurationInSec = 600 * durationPercentage;
-        // console.log('totalDurationInSec: ', totalDurationInSec);
+        const totalActiveDurationInSec = 600 * durationPercentage;
+        // console.log('totalActiveDurationInSec: ', totalActiveDurationInSec);
 
-        globalMusicTracks.total_duration = totalDurationInSec;
+        globalMusicTracks.total_duration = totalActiveDurationInSec;
 
         // get trak info and globalMusicTrackX
         globalMusicTrackX = [];
@@ -1586,10 +1598,10 @@ $(document).ready(function(){
             globalMusicTracks.tracks[i].title = newTitle;
             globalMusicTracks.tracks[i].volume = newVolume;
             globalMusicTracks.tracks[i].mute = newMute;
-            globalMusicTracks.tracks[i].track_start = startPlaySec;
-            globalMusicTracks.tracks[i].track_end = endPlaySec;
+            globalMusicTracks.tracks[i].track_start = trackWillStartSec + startPlaySec;
+            globalMusicTracks.tracks[i].track_end = trackWillStartSec + endPlaySec;
             globalMusicTracks.tracks[i].track_will_start = trackWillStartSec + startPlaySec;
-            globalMusicTracks.tracks[i].track_end_duration = trackEndDrutation;
+            globalMusicTracks.tracks[i].track_will_end = trackWillStartSec + trackEndDrutation;
         }
 
         console.log('globalMusicTracks: ', globalMusicTracks);
@@ -1602,33 +1614,41 @@ $(document).ready(function(){
 
     function handleFilesSelect(files) {
         div.innerHTML = "loading...";
-        // var files = Array.from(input.files);
-        var duration = globalMusicTracks.total_duration * 1000;
+        var duration = (globalMusicTracks.total_duration * 1000).toFixed(2);
         var chunks = [];
         var audio = new AudioContext();
         var mixedAudio = audio.createMediaStreamDestination();
-        // var player = new Audio();
         var context;
         var recorder;
-        var description = "";
-
-        // player.controls = "controls";
+        var description = "finalAudioFile";
 
         function get(file) {
-            description += file.name.replace(/\..*|\s+/g, "");
-            return new Promise(function (resolve, reject) {
-                var reader = new FileReader;
-                reader.readAsArrayBuffer(file);
-                reader.onload = function () {
-                    resolve(reader.result)
-                }
-            })
+            // console.log('file: ', file);
+
+            // if user upload audio file, user filereader to read contents of file
+            if(file.isInputFile === true){
+                return new Promise(function (resolve, reject) {
+                    var reader = new FileReader;
+                    reader.readAsArrayBuffer(file.audioFile);
+                    reader.onload = function () {
+                        resolve(reader.result)
+                    }
+                });
+            }
+            else{
+                // if url load
+                return fetch(file.audioFile)
+                    .then(function(response){
+                        return response.arrayBuffer();
+                    });
+            }
         }
+
 
         function stopMix(duration, ...media) {
             setTimeout(function (media) {
                 media.forEach(function (node) {
-                    node.stop()
+                    node.stop();
                 })
             }, duration, media)
         }
@@ -1651,24 +1671,18 @@ $(document).ready(function(){
                             source.buffer = bufferSource;
                             source.connect(gainNode);
                             // set volume
-                            gainNode.gain.setValueAtTime(0.3, context.currentTime);
+                            gainNode.gain.setValueAtTime(globalMusicTracks.tracks[i].volume, context.currentTime);
                             gainNode.connect(context.destination);
 
                             // set begin, offset and duration==============================
                             // use i to choose audio file
                             // https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode/start
                             // source.start(when, offset, duration)
-                            // whem: time in seconds which sound should begin to play
+                            // when: time in seconds which sound should begin to play
                             // offset: the time, in seconds, within the audio buffer that playback should begin
                             // duration: duration of the sound to be played, specified in seconds
-                            return source.start(globalMusicTracks.tracks[i].track_start, globalMusicTracks.tracks[i].track_will_start, globalMusicTracks.tracks[i].track_end_duration);
+                            return source.start(globalMusicTracks.tracks[i].track_start.toFixed(2), globalMusicTracks.tracks[i].track_will_start.toFixed(2), globalMusicTracks.tracks[i].track_will_end.toFixed(2));
 
-                            if(i === 0){
-                                return source.start(2, 2);
-                            }
-                            else{
-                                return source.start();
-                            }
                         })
                     //  .then(function (bufferSource) {
                     //         console.log('i: ', i);
