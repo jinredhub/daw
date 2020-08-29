@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
     const globalMusicTracks = {
         total_duration: 0,
@@ -7,46 +7,33 @@ $(document).ready(function(){
     };
     const globalWaveformHeight = 100;
     const globalWaveformHeightPaddingTop = 65;
-    // const globalSpaceForScale = 20;
     const globalSpaceForBottom = 100;
     const globalSpaceForTop = 30;
     let globalCurrentZoomLevel = 1;
-    let globalOffsetZoomWhenDragEl = 1;
-    let preSignedUrl = {};
     let myInterval = null;
     let globalMusicTrackX = [];
     let globalIsPlaying = false;
-    let globalIosAudioEl = null;
-    let globalIsoWs = null;
     const globalLineColor = ['ffc5c5', 'ffe5c5', 'f2ed31', '7ce0f0', '7c80f0', 'feb2ff', 'c3c3c3'];
     let colorIndex = 0;
     let globalDeleteTrackId = null;
-
-    // need these for timer
-    // let startTime = null;
-    // let updatedTime = null;
-    // let difference = 0;
-    // let savedTime = null;
-    // let paused = false;
-    // let timerRunning = false;
 
     let setScrollInterval = null;
 
     const audioFiles = [];
 
 
-    $('#openCombineTracksModal').on('click', function(){
+    $('#openCombineTracksModal').on('click', function () {
         $('#combineTrackModal').css('display', 'flex');
     });
 
 
-    $('.closeCombineTrackModal').on('click', function(){
+    $('.closeCombineTrackModal').on('click', function () {
         $('#combineTrackModal').css('display', 'none');
     });
 
 
-    $('.confirmCombineTrackButton').on('click', function(){
-        if(audioFiles.length >= 1){
+    $('.confirmCombineTrackButton').on('click', function () {
+        if (audioFiles.length >= 1) {
             // close 
             $('#combineTrackModal').css('display', 'none');
 
@@ -56,28 +43,29 @@ $(document).ready(function(){
 
             // hide download link
             $('#downloadFinalTrack').css('display', 'none');
+            $('.closeResultModal').css('display', 'none');
 
             getTrackInfo();
 
             console.log('audioFiles: ', audioFiles);
             handleFilesSelect(audioFiles);
         }
-        else{
+        else {
             alert('There are no tracks to combine.');
         }
     });
 
 
-    $('.closeResultModal').on('click', function(){
+    $('.closeResultModal').on('click', function () {
         $('#resultModal').css('display', 'none');
     });
 
 
-    $('#questionButton').on('click', function(){
+    $('#questionButton').on('click', function () {
         $('#questionModal').css('display', 'flex');
     });
 
-    $('.closeQuestionModalButton').on('click', function(){
+    $('.closeQuestionModalButton').on('click', function () {
         $('#questionModal').css('display', 'none');
     });
 
@@ -87,29 +75,29 @@ $(document).ready(function(){
     const questionModal = document.querySelector('#questionModal');
     const bpmModal = document.querySelector('#bpmModal');
 
-    window.onclick = function(event){
-        if(event.target == questionModal){
+    window.onclick = function (event) {
+        if (event.target == questionModal) {
             questionModal.style.display = 'none';
         }
     }
 
 
     // this is for x-axis for duration
-    function renderTimeScale(){
+    function renderTimeScale() {
         // default: maxDurationMin = 10 mins,
         // ticks = maxDurationMin * 10
         // containerWidth = maxDurationMin * 2800
-        // wave container size : see $('.addNewTrack').on('click',
+        // wave container size : see other function,
 
         // change ticks count--------
         let tickMultiplier = 0;
-        if(globalCurrentZoomLevel >= 0.25 && globalCurrentZoomLevel <= 2){
+        if (globalCurrentZoomLevel >= 0.25 && globalCurrentZoomLevel <= 2) {
             tickMultiplier = 50;
         }
-        else if(globalCurrentZoomLevel >= 4){
+        else if (globalCurrentZoomLevel >= 4) {
             tickMultiplier = 200;
         }
-        else if(globalCurrentZoomLevel <= 0.125){
+        else if (globalCurrentZoomLevel <= 0.125) {
             tickMultiplier = 10;
         }
         // --------------------------------------------------
@@ -134,90 +122,90 @@ $(document).ready(function(){
         svg.append('g')
             .attr('class', 'scaleGroup')
             .attr('transform', 'translate(0, ' + 28 + ')') // move 0px from left origin
-            .call(d3.axisTop(xScale).tickFormat(function(d){
+            .call(d3.axisTop(xScale).tickFormat(function (d) {
                 const duration = moment.duration(d, 'seconds');
-                
+
                 // format 00:00
                 let minutes = '';
                 let seconds = '';
 
-                if(duration.minutes() < 10){
+                if (duration.minutes() < 10) {
                     minutes = '0' + duration.minutes();
                 }
-                else{
+                else {
                     minutes = duration.minutes();
                 }
-                if(duration.seconds() < 10){
+                if (duration.seconds() < 10) {
                     seconds = '0' + duration.seconds();
                 }
-                else{
+                else {
                     seconds = duration.seconds();
                 }
 
                 // update which ticks to display duration
-                if(globalCurrentZoomLevel >= 0.25 && globalCurrentZoomLevel <= 2){
-                    if(d%5 === 0){
-                        if(minutes === '00' && seconds === '00'){
+                if (globalCurrentZoomLevel >= 0.25 && globalCurrentZoomLevel <= 2) {
+                    if (d % 5 === 0) {
+                        if (minutes === '00' && seconds === '00') {
                             return '';
                         }
-                        else{
+                        else {
                             return minutes + ':' + seconds;
                         }
                     }
                 }
-                else if(globalCurrentZoomLevel >= 4){
+                else if (globalCurrentZoomLevel >= 4) {
                     // return duration to all ticks
-                    if(d%1 === 0){
-                        if(minutes === '00' && seconds === '00'){
+                    if (d % 1 === 0) {
+                        if (minutes === '00' && seconds === '00') {
                             return '';
                         }
-                        else{
+                        else {
                             return minutes + ':' + seconds;
                         }
                     }
                 }
-                else if(globalCurrentZoomLevel <= 0.125){
-                    if(d%2 === 0){
-                        if(minutes === '00' && seconds === '00'){
+                else if (globalCurrentZoomLevel <= 0.125) {
+                    if (d % 2 === 0) {
+                        if (minutes === '00' && seconds === '00') {
                             return '';
                         }
-                        else{
+                        else {
                             return minutes + ':' + seconds;
                         }
                     }
                 }
-                
+
             }).ticks(maxDurationMin * tickMultiplier));
 
 
         // update height
         const lines = $('.scaleGroup').find('line');
-        if(globalCurrentZoomLevel >= 0.25 && globalCurrentZoomLevel <= 1){
-            for(let i=0; i<lines.length; i++){
-                if(i%5 === 0){
+        if (globalCurrentZoomLevel >= 0.25 && globalCurrentZoomLevel <= 1) {
+            for (let i = 0; i < lines.length; i++) {
+                if (i % 5 === 0) {
                     $(lines[i]).css('transform', `scale(1, 1.5)`);
                 }
-                else{
-                    $(lines[i]).css('transform', `scale(1, 1)`);
-                }
-            }        
-        }
-        else if(globalCurrentZoomLevel >= 2){
-            for(let i=0; i<lines.length; i++){
-                if(i%5 === 0){
-                    $(lines[i]).css('transform', `scale(1, 1.5)`);
-                }
-                else{
+                else {
                     $(lines[i]).css('transform', `scale(1, 1)`);
                 }
             }
         }
-        else if(globalCurrentZoomLevel <= 0.125){
-            for(let i=0; i<lines.length; i++){
-                if(i%2 === 0){
+        else if (globalCurrentZoomLevel >= 2) {
+            for (let i = 0; i < lines.length; i++) {
+                if (i % 5 === 0) {
                     $(lines[i]).css('transform', `scale(1, 1.5)`);
                 }
-                else{
+                else {
+                    $(lines[i]).css('transform', `scale(1, 1)`);
+                }
+            }
+        }
+        else if (globalCurrentZoomLevel <= 0.125) {
+            for (let i = 0; i < lines.length; i++) {
+                if (i % 2 === 0) {
+                    $(lines[i]).css('transform', `scale(1, 1.5)`);
+                }
+                else {
                     $(lines[i]).css('transform', `scale(1, 1)`);
                 }
             }
@@ -227,15 +215,14 @@ $(document).ready(function(){
 
 
 
-
     // make the el draggable====================================
-    $('#mixingContainer').on('mousedown touchstart', '.waveform, #trackEndSlider, .trackLeftTrimSlider, .trackRightTrimSlider, #animateThisBarHandle, .lockIconAboveWaveform', function(e){
+    $('#mixingContainer').on('mousedown touchstart', '.waveform, #trackEndSlider, .trackLeftTrimSlider, .trackRightTrimSlider, #animateThisBarHandle, .lockIconAboveWaveform', function (e) {
         e.stopPropagation();
         e.preventDefault();
 
         // prevent drag then use click event for lock button for mobile
-        if($(this).hasClass('lockIconAboveWaveform')){
-            if(e.type === 'touchstart'){
+        if ($(this).hasClass('lockIconAboveWaveform')) {
+            if (e.type === 'touchstart') {
                 $(this).trigger('click');
             }
             return;
@@ -243,7 +230,7 @@ $(document).ready(function(){
 
         // check if waveform is locked
         const dataDrag = $(this).closest('.waveform').attr('data-drag');
-        if(dataDrag === 'false'){
+        if (dataDrag === 'false') {
             return;
         }
 
@@ -253,28 +240,28 @@ $(document).ready(function(){
         const that = this;
 
         // get the mouse cursor position at startup
-        if(e.type === 'touchstart'){
+        if (e.type === 'touchstart') {
             // for mobile devices
             $('#mixingContainer').css('overflow-x', 'hidden');
 
             initialX = e.touches[0].clientX;
         }
-        else{
+        else {
             initialX = e.clientX;
         }
 
         // add will-change css
         $(that).css('will-change', 'left');
-        if($(that).hasClass('trackLeftTrimSlider')){
+        if ($(that).hasClass('trackLeftTrimSlider')) {
             const trackId = $(that).closest('.waveform').attr('data-trackid');
             $(`#verticalTrackBeginLine${trackId}`).css('will-change', 'left');
         }
-        else if($(that).hasClass('trackRightTrimSlider')){
+        else if ($(that).hasClass('trackRightTrimSlider')) {
             const trackId = $(that).closest('.waveform').attr('data-trackid');
             $(`#verticalTrackEndLine${trackId}`).css('will-change', 'left');
         }
 
-        $(document).on('mouseup touchend', function(e){
+        $(document).on('mouseup touchend', function (e) {
             // for mobile devices
             $('#mixingContainer').css('overflow-x', 'auto');
 
@@ -284,17 +271,17 @@ $(document).ready(function(){
 
             // for moving tracks
             const targetId = that.id;
-            if(targetId !== 'trackEndSlider' && $(that).hasClass('trackLeftTrimSlider') === false && $(that).hasClass('trackRightTrimSlider') === false){
+            if (targetId !== 'trackEndSlider' && $(that).hasClass('trackLeftTrimSlider') === false && $(that).hasClass('trackRightTrimSlider') === false) {
                 moveBackTrackEndSliderWhenMovingTrack(that);
             }
 
             // remove will-change css
             $(that).css('will-change', '');
-            if($(that).hasClass('trackLeftTrimSlider')){
+            if ($(that).hasClass('trackLeftTrimSlider')) {
                 const trackId = $(that).closest('.waveform').attr('data-trackid');
                 $(`#verticalTrackBeginLine${trackId}`).css('will-change', '');
             }
-            else if($(that).hasClass('trackRightTrimSlider')){
+            else if ($(that).hasClass('trackRightTrimSlider')) {
                 const trackId = $(that).closest('.waveform').attr('data-trackid');
                 $(`#verticalTrackEndLine${trackId}`).css('will-change', '');
             }
@@ -303,9 +290,9 @@ $(document).ready(function(){
             // checkPreventMovingOverOtherTrimSlider(that);
             updateLeftTrimSliderZIndex(that);
         });
-        
+
         // call a function whenever the cursor moves==================================
-        $(document).on('mousemove touchmove', function(e){
+        $(document).on('mousemove touchmove', function (e) {
             e.preventDefault();
 
             const trackId = $(that).closest('.waveform').attr('data-trackId');
@@ -314,60 +301,56 @@ $(document).ready(function(){
 
             // calculate new cursor position
             // calculating diffrence between old mouse position and new mouse position
-            if(e.type === 'touchmove'){
+            if (e.type === 'touchmove') {
                 currentX = initialX - e.touches[0].clientX;
                 initialX = e.touches[0].clientX;
             }
-            else{
+            else {
                 currentX = initialX - e.clientX;
                 initialX = e.clientX;
             }
 
-            // set the el's new position
-            // offseLeft: position left + margin from the first positioned parent left edge
-            // clientX: output coordinates of the mouse pointer within the application's client area
-
             // prevent moving el less than 0
-            if(that.offsetLeft < 0){
+            if (that.offsetLeft < 0) {
                 that.offsetLeft = 0;
 
                 //
-                if(targetId === 'trackEndSlider'){
+                if (targetId === 'trackEndSlider') {
                     that.offsetLeft = 20;
                     that.style.left = 20 + 'px';
                 }
-                else if(targetId === 'animateThisBarHandle'){
+                else if (targetId === 'animateThisBarHandle') {
                     $('#animateThisBarHandle').css('left', 0);
                     $('#animateThisBar').css('left', 0);
                 }
-                else{
+                else {
                     // reset verticalTrackBeginLine and verticalTrackEndLine
                     const resetLeft = parseFloat($(`#trackLeftTrimSlider${trackId}`).css('left').split('px')[0]);
                     const resetRight = parseFloat($(`#trackRightTrimSlider${trackId}`).css('left').split('px')[0]);
-                    
+
                     $(`#verticalTrackBeginLine${trackId}`).css('left', resetLeft + 'px');
                     $(`#verticalTrackEndLine${trackId}`).css('left', resetRight + 'px');
                 }
             }
-            else{
+            else {
                 that.style.left = (that.offsetLeft - currentX) + 'px';
 
                 // move verticalTrackBeginLine and verticalTrackEndLine while dragging a track
-                if($(that).hasClass('waveform')){
-                    const verticalTrackBeginLineEl =  document.getElementById(`verticalTrackBeginLine${trackId}`);
-                    const verticalTrackEndLineEl =  document.getElementById(`verticalTrackEndLine${trackId}`);
+                if ($(that).hasClass('waveform')) {
+                    const verticalTrackBeginLineEl = document.getElementById(`verticalTrackBeginLine${trackId}`);
+                    const verticalTrackEndLineEl = document.getElementById(`verticalTrackEndLine${trackId}`);
                     verticalTrackBeginLineEl.style.left = (verticalTrackBeginLineEl.offsetLeft - currentX) + 'px';
                     verticalTrackEndLineEl.style.left = (verticalTrackEndLineEl.offsetLeft - currentX) + 'px';
                 }
             }
 
-            if(targetId === 'trackEndSlider'){
+            if (targetId === 'trackEndSlider') {
                 // scale the slider
                 const trackEndSliderLeft = that.style.left.split('px')[0];
 
                 $('#activeTrackDiv').width(parseFloat(trackEndSliderLeft) + 4);
             }
-            else if(targetId === 'animateThisBarHandle'){
+            else if (targetId === 'animateThisBarHandle') {
                 // move animateThisBar as well
                 document.getElementById('animateThisBar').style.left = (that.offsetLeft - currentX) + 'px';
             }
@@ -378,7 +361,7 @@ $(document).ready(function(){
             const isRightSlider = $(that).hasClass('trackRightTrimSlider');
 
 
-            if(isLeftSlider){
+            if (isLeftSlider) {
                 let leftValue = parseFloat($(that).css('left').split('px')[0]);
 
                 $(`#leftTrim${trackId}`).width(leftValue);
@@ -386,10 +369,10 @@ $(document).ready(function(){
                 // move verticalTrackBeginLine
                 const waveformContainerLeft = parseFloat($(`#waveform${trackId}`).css('left').split('px')[0]);
                 $(`#verticalTrackBeginLine${trackId}`).css('left', waveformContainerLeft + leftValue + 'px');
-                
+
                 // prevent moving over right slider
                 const rightValue = parseFloat($(that).closest('.waveform').find('.trackRightTrimSlider').css('left').split('px')[0]);
-                if(leftValue > rightValue){
+                if (leftValue > rightValue) {
                     leftValue = rightValue;
                     $(that).css('left', rightValue + 'px');
                     $(`#leftTrim${trackId}`).width(rightValue);
@@ -399,7 +382,7 @@ $(document).ready(function(){
                 }
 
                 // prevent moving slider less thatn 0
-                if(leftValue < 0){
+                if (leftValue < 0) {
                     leftValue = 0;
                     $(that).css('left', 0);
 
@@ -408,7 +391,7 @@ $(document).ready(function(){
                 }
 
             }
-            else if(isRightSlider){
+            else if (isRightSlider) {
                 const containerWidth = $(that).closest('.waveform').width();
                 let rightValue = parseFloat($(that).css('left').split('px')[0]);
 
@@ -416,7 +399,7 @@ $(document).ready(function(){
 
                 // prevent moving over left slider
                 const leftValue = parseFloat($(that).closest('.waveform').find('.trackLeftTrimSlider').css('left').split('px')[0]);
-                if(leftValue > rightValue){
+                if (leftValue > rightValue) {
                     rightValue = leftValue;
                     $(that).css('left', leftValue + 'px');
                     $(`#rightTrim${trackId}`).width(containerWidth - leftValue);
@@ -425,9 +408,9 @@ $(document).ready(function(){
                 // move verticalTrackEndLine
                 const waveformContainerLeft = parseFloat($(`#waveform${trackId}`).css('left').split('px')[0]);
                 $(`#verticalTrackEndLine${trackId}`).css('left', waveformContainerLeft + rightValue + 'px');
-                
+
                 // prevent moving slider over 100% of container
-                if(rightValue > containerWidth){
+                if (rightValue > containerWidth) {
                     rightValue = containerWidth;
                     $(that).css('left', containerWidth + 'px');
 
@@ -442,39 +425,39 @@ $(document).ready(function(){
 
 
 
-    function loadNewAudioTrack(audioFile, fileName, isNewTrack){
+    function loadNewAudioTrack(audioFile, fileName, isNewTrack) {
         // default: waveform width = duration * 46.633
 
         // enable buttons
-        if(globalCurrentZoomLevel !== 0.125){
+        if (globalCurrentZoomLevel !== 0.125) {
             $('.zoomOut').css('opacity', 1).prop('disabled', false);
         }
-        if(globalCurrentZoomLevel !== 4){
+        if (globalCurrentZoomLevel !== 4) {
             $('.zoomIn').css('opacity', 1).prop('disabled', false);
         }
         $('#playWaveFormButton').css('opacity', 1).prop('disabled', false);
-        $('#openCombineTracksModal').css('opacity', 1).prop('disabled', false); 
-        
+        $('#openCombineTracksModal').css('opacity', 1).prop('disabled', false);
+
         // hide empty track message
         $('#trackIsEmptyDiv').css('display', 'none');
 
         // clear setScrollInterval
-        if(setScrollInterval){
+        if (setScrollInterval) {
             clearInterval(setScrollInterval);
         }
 
         // check if saved track or new one
-        if(isNewTrack === 'true'){
+        if (isNewTrack === 'true') {
 
             // only to load duration
             const useThisforDurationWs = WaveSurfer.create({
-                container: '#temp' ,
+                container: '#temp',
                 scrollParent: false,
                 interact: false,
                 pixelRatio: 1,  // 1 for faster rendering
             });
 
-            useThisforDurationWs.on('ready', function(){
+            useThisforDurationWs.on('ready', function () {
                 const newId = guid();
                 const duration = useThisforDurationWs.getDuration();
 
@@ -485,7 +468,7 @@ $(document).ready(function(){
 
                 // resize container first
                 const newWaveformWidth = duration * 46.633;
-                $('#waveform' + newId).css('width', newWaveformWidth * globalCurrentZoomLevel+ 'px');
+                $('#waveform' + newId).css('width', newWaveformWidth * globalCurrentZoomLevel + 'px');
 
                 const data = {
                     ws: '',
@@ -506,18 +489,15 @@ $(document).ready(function(){
                     waveColor: '#949494',
                     progressColor: '#444',
                     backgroundColor: '#fafafa',
-                    // fillParent: true,
                     scrollParent: false,
-                    // minPxPerSec: 10,
                     height: globalWaveformHeight,
                     interact: false,
                     pixelRatio: 2,  // 1 for faster rendering
-                    // autocenter: true,
                     minPxPerSec: 46.6 * globalCurrentZoomLevel,
                 });
 
-                data.ws.on('ready', function(){
-                    
+                data.ws.on('ready', function () {
+
                     globalMusicTracks.tracks.push(data);
 
                     // set volume to 0.5
@@ -532,16 +512,16 @@ $(document).ready(function(){
                     updateAnimateThisBarHeight();
 
                     // update the slider only for the first time
-                    if(globalMusicTracks.tracks.length === 1){
+                    if (globalMusicTracks.tracks.length === 1) {
                         moveTrackEndSlider(newId);
                     }
 
                     setScrollInterval = setInterval(scrollMixingContainer, 32);
 
                     // get color
-                    if(colorIndex === globalLineColor.length){
+                    if (colorIndex === globalLineColor.length) {
                         colorIndex = 0;
-                    } 
+                    }
 
                     const color = globalLineColor[colorIndex];
 
@@ -550,29 +530,27 @@ $(document).ready(function(){
 
                     // append verticalTrackBeginLine and verticalTrackEndLine
                     appendVericalTrackBeginEndLines(newId, newWaveformWidth, color, 'new');
-                    
+
                     // update height of detail panel
                     updateDetailPanelHeight();
-        
+
                     updateHeightOfVerticalTrackLine();
 
                     colorIndex++;
 
                     // loading icon------------------------------------
                     $('#loading').css('display', 'none');
-                    
+
                 });
 
-                // data.ws.load(preSignedUrl.music_url);
                 data.ws.load(audioFile);
 
             });
 
-            // useThisforDurationWs.load(preSignedUrl.music_url);
             useThisforDurationWs.load(audioFile);
         }
-        else{
-            for(let i=0; i<globalMusicTracks.tracks.length; i++){
+        else {
+            for (let i = 0; i < globalMusicTracks.tracks.length; i++) {
                 const newId = globalMusicTracks.tracks[i].id;
                 const duration = globalMusicTracks.tracks[i].duration;
 
@@ -598,11 +576,10 @@ $(document).ready(function(){
                     height: globalWaveformHeight,
                     interact: false,
                     pixelRatio: 2,  // 1 for faster rendering
-                    // autocenter: true,
                     minPxPerSec: 46.6 * globalCurrentZoomLevel,
                 });
 
-                globalMusicTracks.tracks[i].ws.on('ready', function(){
+                globalMusicTracks.tracks[i].ws.on('ready', function () {
 
                     // set volume
                     globalMusicTracks.tracks[i].ws.setVolume(globalMusicTracks.tracks[i].volume);
@@ -616,16 +593,16 @@ $(document).ready(function(){
                     updateAnimateThisBarHeight();
 
                     // update the slider only for the first time
-                    if(globalMusicTracks.tracks.length === 1){
+                    if (globalMusicTracks.tracks.length === 1) {
                         moveTrackEndSlider(newId);
                     }
 
                     setScrollInterval = setInterval(scrollMixingContainer, 40);
 
                     // get color
-                    if(colorIndex === globalLineColor.length){
+                    if (colorIndex === globalLineColor.length) {
                         colorIndex = 0;
-                    } 
+                    }
 
                     const color = globalLineColor[colorIndex];
 
@@ -637,11 +614,11 @@ $(document).ready(function(){
 
                     // update height of detail panel
                     updateDetailPanelHeight();
-        
+
                     updateHeightOfVerticalTrackLine();
 
-                    colorIndex++;    
-        
+                    colorIndex++;
+
                     updateUIfromSavedData(globalMusicTracks.tracks[i]);
 
                     updateTrackEndSliderFromSavedData(globalMusicTracks.trackEndSliderPosition);
@@ -653,84 +630,67 @@ $(document).ready(function(){
 
                 globalMusicTracks.tracks[i].ws.load(globalMusicTracks.tracks[i].audioFileUrl);
             }
-        }    
+        }
     }
 
 
 
+    $('#addNewAudioFile').on('change', function (e) {
+        let fileName = '';
+        if (this.files && this.files.length > 1) {
+            fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+        }
+        else {
+            fileName = e.target.value.split('\\').pop();
+        }
 
-    // const inputs = document.querySelectorAll('#addNewAudioFile');
-    // Array.prototype.forEach.call(inputs, function(input){
-    //     const label = input.nextElementSibling;
-    //     const labelVal = label.innerHTML;
+        if (fileName) {
+            // file extension and size vertification
+            const fileNameSplit = e.target.files[0].name.split('.');
+            let fileExtension = fileNameSplit[fileNameSplit.length - 1];
+            fileExtension = fileExtension.toLowerCase();
+            const fileSize = e.target.files[0].size / 1024 / 1024;
 
-        $('#addNewAudioFile').on('change', function(e){
-            let fileName = '';
-            if(this.files && this.files.length > 1){
-                fileName = (this.getAttribute('data-multiple-caption') || '').replace('{count}', this.files.length);
+            // let isAcceptableExtension = null;
+            if (fileExtension === "mp3" || fileExtension === "m4a" || fileExtension === "wav" || fileExtension === "ogg") {
+                // isAcceptableExtension = true;
             }
-            else{
-                fileName = e.target.value.split('\\').pop();
+            else {
+                // if wong extansion
+                alert('Please upload supported audio extensions: mp3, m4a, wav, ogg');
+
+                return;
             }
 
-            if(fileName){
-                // label.querySelector('span').innerHTML = fileName;
+            // loading icon------------------------------------
+            $('#loading').css('display', 'flex');
 
-                // file extension and size vertification
-                const fileNameSplit =  e.target.files[0].name.split('.');
-                let fileExtension = fileNameSplit[fileNameSplit.length -1];
-                fileExtension = fileExtension.toLowerCase();
-                const fileSize = e.target.files[0].size/1024/1024;
+            const userFile = e.target.files[0];
 
-                // console.log('ext, size: ', fileExtension + ", ", fileSize);
-                // console.log('filenamesplit[0]: ', fileNameSplit[0]);
-                // console.log('userid: ', userId);
+            audioFiles.push({
+                'audioFile': userFile,
+                'isInputFile': true,
+            });
 
-                // let isAcceptableExtension = null;
-                if(fileExtension === "mp3" || fileExtension === "m4a" || fileExtension === "wav" || fileExtension === "ogg"){
-                    // isAcceptableExtension = true;
-                }
-                else{
-                    // if wong extansion
-                    // console.log('worng extension');
-                    // alert('Max file size : 3MB. Supported extensions: mp3, m4a, wav');
-                    // displayMessage('Max file size : 3MB. Supported extensions: mp3, m4a, wav.', 'message-danger');
+            var reader = new FileReader();
+            reader.readAsDataURL(userFile);
+            reader.onload = function (evt) {
 
-                    alert('Please upload audio file.');
+                loadNewAudioTrack(reader.result, fileName, 'true');
 
-                    return;
-                }
-
-                // loading icon------------------------------------
-                $('#loading').css('display', 'flex');
-
-                const userFile = e.target.files[0];
-
-                audioFiles.push({
-                    'audioFile': userFile,
-                    'isInputFile': true,
-                });
-
-                var reader = new FileReader();
-                reader.readAsDataURL(userFile); 
-                reader.onload = function(evt){
-
-                    loadNewAudioTrack(reader.result, fileName, 'true');
-
-                }
             }
-        });
-    // });
+        }
+    });
 
 
 
-    $('#playWaveFormButton').on('click', function(){
+    $('#playWaveFormButton').on('click', function () {
         // hide click here message
         $('#clickToPlayTooltip').css('display', 'none');
 
         globalIsPlaying = d3.select('#animateThisBar').attr('data-isPlaying');
 
-        if(globalIsPlaying === 'true'){
+        if (globalIsPlaying === 'true') {
             // enable delete button
             $('.deleteTrackButton').css('opacity', 1).prop('disabled', false);
 
@@ -750,16 +710,16 @@ $(document).ready(function(){
             clearInterval(myInterval);
 
             // pause all tracks
-            for(let i=0; i<globalMusicTracks.tracks.length; i++){
-                if(globalMusicTracks.tracks[i].ws.isPlaying()){
+            for (let i = 0; i < globalMusicTracks.tracks.length; i++) {
+                if (globalMusicTracks.tracks[i].ws.isPlaying()) {
                     globalMusicTracks.tracks[i].ws.stop();
                 }
             }
 
             globalIsPlaying = false;
-            
+
         }
-        else{
+        else {
             // disable delete button
             $('.deleteTrackButton').css('opacity', 0.4).prop('disabled', true);
 
@@ -771,16 +731,16 @@ $(document).ready(function(){
             const animateLineLeft = parseFloat($('#animateThisBar').css('left').split('px')[0]);
             const animateLineDuration = 600000; // 10 mins
             const containerWidth = $('#mixingScrollDiv').width();
-            const containerHeight = document.getElementById('mixingContainer').clientHeight - 1;  
+            const containerHeight = document.getElementById('mixingContainer').clientHeight - 1;
 
             const trackEndSliderLeft = parseFloat($('#trackEndSlider').css('left').split('px')[0]);
             let newAnimateLineDuration = null;
 
-            if(animateLineLeft >= trackEndSliderLeft){
+            if (animateLineLeft >= trackEndSliderLeft) {
                 // play from beginning
                 newAnimateLineDuration = 0;
             }
-            else{
+            else {
                 // play from animateThisBar position
                 const newAnimateLineDurationPercentage = animateLineLeft / containerWidth;
 
@@ -792,15 +752,15 @@ $(document).ready(function(){
                 .style('left', newAnimateLineDuration)
                 .attr('data-isPlaying', true);
 
-            const lineHandle =  d3.select('#animateThisBarHandle')
+            const lineHandle = d3.select('#animateThisBarHandle')
                 .style('left', newAnimateLineDuration);
 
             line.transition()
                 .duration(animateLineDuration)
                 .ease(d3.easeLinear)
                 .style('left', containerWidth + 'px')
-                .style('height', containerHeight + 'px'); 
-                
+                .style('height', containerHeight + 'px');
+
             lineHandle.transition()
                 .duration(animateLineDuration)
                 .ease(d3.easeLinear)
@@ -810,27 +770,27 @@ $(document).ready(function(){
 
             // execute func once before setInterval
             compareAllTrackXThenPlayStop();
-            
+
             // 1000 = 1 sec
             let intervalNum = 10;
-            if(globalCurrentZoomLevel === 4){
+            if (globalCurrentZoomLevel === 4) {
                 intervalNum = 1;
             }
             myInterval = setInterval(compareAllTrackXThenPlayStop, intervalNum);
 
         }
-        
+
     });
 
 
 
-    function compareAllTrackXThenPlayStop(){
+    function compareAllTrackXThenPlayStop() {
         const animateThisBarX = parseFloat($('#animateThisBar').css('left').split('px')[0]);
 
         // play
-        for(let i=0; i<globalMusicTrackX.length; i++){
-            if(globalMusicTrackX[i].startPlayPixel <= animateThisBarX && globalMusicTrackX[i].playStarted === false && globalMusicTrackX[i].endPlayPixel >= animateThisBarX){
-                if(globalMusicTrackX[i].startPlayPixel <= animateThisBarX){
+        for (let i = 0; i < globalMusicTrackX.length; i++) {
+            if (globalMusicTrackX[i].startPlayPixel <= animateThisBarX && globalMusicTrackX[i].playStarted === false && globalMusicTrackX[i].endPlayPixel >= animateThisBarX) {
+                if (globalMusicTrackX[i].startPlayPixel <= animateThisBarX) {
                     // re-calculate start sec
                     const leftTrimPercentage = (animateThisBarX - globalMusicTrackX[i].left) / globalMusicTrackX[i].containerWidth;
                     const newStartPlaySec = globalMusicTracks.tracks[i].duration * leftTrimPercentage;
@@ -839,9 +799,9 @@ $(document).ready(function(){
 
                     globalMusicTracks.tracks[i].ws.play(newStartPlaySec, globalMusicTrackX[i].track_end);
                 }
-                else{
+                else {
                     globalMusicTrackX[i].playStarted = true;
-                    // todo: i need to check if these are same i 
+
                     globalMusicTracks.tracks[i].ws.play(globalMusicTrackX[i].track_start, globalMusicTrackX[i].track_end);
                 }
             }
@@ -849,28 +809,28 @@ $(document).ready(function(){
 
         // check trackEndSlider
         const trackEndSliderPosition = $('#trackEndSlider').css('left').split('px')[0];
-        if(animateThisBarX >= trackEndSliderPosition){
+        if (animateThisBarX >= trackEndSliderPosition) {
             $('#playWaveFormButton').trigger('click');
         }
     }
 
 
 
-    function updateWaveformYaxis(){        
-        for(let i=0; i<globalMusicTracks.tracks.length; i++){
+    function updateWaveformYaxis() {
+        for (let i = 0; i < globalMusicTracks.tracks.length; i++) {
             $(`#waveform${globalMusicTracks.tracks[i].id}`).css('top', globalWaveformHeight * i + globalWaveformHeightPaddingTop * (i + 1) + globalSpaceForTop);
         }
     }
 
 
 
-    function updateMixingContainerHeight(){
+    function updateMixingContainerHeight() {
         $('#mixingContainer').css('height', (globalWaveformHeight + globalWaveformHeightPaddingTop) * globalMusicTracks.tracks.length + globalSpaceForTop + globalSpaceForBottom);
     }
 
 
-    function updateAnimateThisBarHeight(){
-        const containerHeight = document.getElementById('mixingContainer').clientHeight - 1;      
+    function updateAnimateThisBarHeight() {
+        const containerHeight = document.getElementById('mixingContainer').clientHeight - 1;
 
         const line = d3.select('#animateThisBar')
             .style('height', containerHeight + 'px');
@@ -878,17 +838,13 @@ $(document).ready(function(){
 
 
 
-    $('.zoomIn').on('click', function(e){
-        // Need to put renderTimeScale inside setTimeout in order to execute #loading to display before start computing scale
-        // Need 200ms? to proprly display #loading
-        // you still can click zoomIn / zoomOut btn through #loading
-
+    $('.zoomIn').on('click', function (e) {
+        // Need 200ms to  display #loading
         // loading icon------------------------------------
         $('#loading').css('display', 'flex');
 
-        setTimeout(function(){
+        setTimeout(function () {
             globalCurrentZoomLevel *= 2;
-            globalOffsetZoomWhenDragEl /= 2;
 
             // values before update
             const activeTrackDivWidth = Number($('#activeTrackDiv').css('width').split('px')[0]);
@@ -905,14 +861,14 @@ $(document).ready(function(){
             $('#animateThisBar').css('left', animateThisBarLeft * 2 + 'px');
             $('#animateThisBarHandle').css('left', animateThisBarLeft * 2 + 'px');
 
-            for(let i=0; i<globalMusicTracks.tracks.length; i++){
+            for (let i = 0; i < globalMusicTracks.tracks.length; i++) {
                 // values before update
                 const waveformWidth = Number($(`#waveform${globalMusicTracks.tracks[i].id}`).css('width').split('px')[0]);
                 const waveformLeft = Number($(`#waveform${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
 
                 const verticalTrackBeginLineLeft = Number($(`#verticalTrackBeginLine${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
                 const verticalTrackEndLineLeft = Number($(`#verticalTrackEndLine${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
-                
+
                 const trackLeftTrimSliderLeft = Number($(`#trackLeftTrimSlider${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
                 const trackRightTrimSliderLeft = Number($(`#trackRightTrimSlider${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
 
@@ -938,11 +894,11 @@ $(document).ready(function(){
                 $(`#rightTrim${globalMusicTracks.tracks[i].id}`).css('width', (waveformWidth - trackRightTrimSliderLeft) * 2 + 'px');
             }
 
-            if(globalCurrentZoomLevel === 4){
+            if (globalCurrentZoomLevel === 4) {
                 $('.zoomIn').css('opacity', 0.5).prop('disabled', true);
                 $('.zoomOut').css('opacity', 1).prop('disabled', false);
             }
-            else{
+            else {
                 $('.zoomIn').css('opacity', 1).prop('disabled', false);
                 $('.zoomOut').css('opacity', 1).prop('disabled', false);
             }
@@ -953,16 +909,15 @@ $(document).ready(function(){
 
     });
 
-    $('.zoomOut').on('click', function(){
+    $('.zoomOut').on('click', function () {
 
         // loading icon------------------------------------
         $('#loading').css('display', 'flex');
-        
-        // need 200ms?, see above
-        setTimeout(function(){
+
+        // Need 200ms to  display #loading
+        setTimeout(function () {
 
             globalCurrentZoomLevel /= 2;
-            globalOffsetZoomWhenDragEl *= 2;
 
             // values before update
             const activeTrackDivWidth = Number($('#activeTrackDiv').css('width').split('px')[0]);
@@ -979,14 +934,14 @@ $(document).ready(function(){
             $('#animateThisBar').css('left', animateThisBarLeft * 0.5 + 'px');
             $('#animateThisBarHandle').css('left', animateThisBarLeft * 0.5 + 'px');
 
-            for(let i=0; i<globalMusicTracks.tracks.length; i++){
+            for (let i = 0; i < globalMusicTracks.tracks.length; i++) {
                 // values before update
                 const waveformWidth = Number($(`#waveform${globalMusicTracks.tracks[i].id}`).css('width').split('px')[0]);
                 const waveformLeft = Number($(`#waveform${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
 
                 const verticalTrackBeginLineLeft = Number($(`#verticalTrackBeginLine${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
                 const verticalTrackEndLineLeft = Number($(`#verticalTrackEndLine${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
-                
+
                 const trackLeftTrimSliderLeft = Number($(`#trackLeftTrimSlider${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
                 const trackRightTrimSliderLeft = Number($(`#trackRightTrimSlider${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
 
@@ -1012,46 +967,44 @@ $(document).ready(function(){
                 $(`#rightTrim${globalMusicTracks.tracks[i].id}`).css('width', (waveformWidth - trackRightTrimSliderLeft) * 0.5 + 'px');
             }
 
-            if(globalCurrentZoomLevel === 0.125){
+            if (globalCurrentZoomLevel === 0.125) {
                 $('.zoomOut').css('opacity', 0.5).prop('disabled', true);
                 $('.zoomIn').css('opacity', 1).prop('disabled', false);
             }
-            else{
+            else {
                 $('.zoomOut').css('opacity', 1).prop('disabled', false);
                 $('.zoomIn').css('opacity', 1).prop('disabled', false);
             }
 
             // loading icon------------------------------------
             $('#loading').css('display', 'none');
-        
+
         }, 200);
 
     });
 
 
 
-    
-    function scrollMixingContainer(){
-        // this doesn't work all the time in mobile
 
-        if(globalIsPlaying){
+    function scrollMixingContainer() {
+        if (globalIsPlaying) {
             const animateLineLeft = parseFloat($('#animateThisBar').css('left').split('px')[0]);
 
             const containerWidth = $('#mixingScrollDiv').width();
 
-            const timePassedPercentage =  animateLineLeft / containerWidth;
+            const timePassedPercentage = animateLineLeft / containerWidth;
 
             const offsetX = $(`#mixingContainer`).width() / 2;
 
             document.getElementById('mixingContainer').scrollLeft = containerWidth * timePassedPercentage - offsetX;
-          
+
         }
     }
 
 
-    
 
-    function moveTrackEndSlider(newId){
+
+    function moveTrackEndSlider(newId) {
         const width = $(`#waveform${newId}`).width();
 
         $('#trackEndSlider').css('left', width);
@@ -1059,40 +1012,40 @@ $(document).ready(function(){
     }
 
 
-    
-    function checkPreventMovingTrackLessThanZero(){
-        for(let i=0; i<globalMusicTracks.tracks.length; i++){
+
+    function checkPreventMovingTrackLessThanZero() {
+        for (let i = 0; i < globalMusicTracks.tracks.length; i++) {
             const left = parseFloat($(`#waveform${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
-            
-            if(left < 0){
+
+            if (left < 0) {
                 $(`#waveform${globalMusicTracks.tracks[i].id}`).css('left', 0);
             }
         }
     }
 
-    
-    function updateLeftTrimSliderZIndex(el){
+
+    function updateLeftTrimSliderZIndex(el) {
 
         const isLeftSlider = $(el).hasClass('trackLeftTrimSlider');
 
-        if(isLeftSlider){
+        if (isLeftSlider) {
             const containerWidth = $(el).closest('.waveform').width();
             const leftValue = $(el).css('left').split('px')[0];
 
             const leftTrimPercentage = leftValue / containerWidth * 100;
 
-            if(leftTrimPercentage > 80){
+            if (leftTrimPercentage > 80) {
                 $(el).css('z-index', 8);
             }
-            else{
+            else {
                 $(el).css('z-index', 6);
             }
         }
     }
 
 
-    $('#trackEndSliderContainer').on('click', function(e){
-        if(e.target.id === 'trackEndSliderContainer'){
+    $('#trackEndSliderContainer').on('click', function (e) {
+        if (e.target.id === 'trackEndSliderContainer') {
             const x = e.offsetX;
 
             $('#animateThisBarHandle').css('left', x);
@@ -1102,12 +1055,12 @@ $(document).ready(function(){
 
 
 
-    $('#trackDetailPanel').on('input', '.volumeSlider', function(){
+    $('#trackDetailPanel').on('input', '.volumeSlider', function () {
         const newVolume = this.value;
-        
+
         const id = $(this).closest('.trackDetailListItem').attr('data-id');
 
-        const index = globalMusicTracks.tracks.findIndex(function(val){
+        const index = globalMusicTracks.tracks.findIndex(function (val) {
             return val.id === id;
         });
 
@@ -1119,16 +1072,16 @@ $(document).ready(function(){
 
 
 
-    $('#trackDetailPanel').on('click', '.muteButton', function(){
+    $('#trackDetailPanel').on('click', '.muteButton', function () {
         const isMute = $(this).attr('data-mute');
 
         const id = $(this).closest('.trackDetailListItem').attr('data-id');
 
-        const index = globalMusicTracks.tracks.findIndex(function(val){
+        const index = globalMusicTracks.tracks.findIndex(function (val) {
             return val.id === id;
         });
 
-        if(isMute == 'false'){
+        if (isMute == 'false') {
             $(this).html('<i class="fas fa-volume-mute" style="font-size: 18px; color: #d6d6d6;"></i>');
 
             globalMusicTracks.tracks[index].ws.setMute(true);
@@ -1139,7 +1092,7 @@ $(document).ready(function(){
             // update dom
             $(this).attr('data-mute', 'true');
         }
-        else{
+        else {
             $(this).html('<i class="fas fa-volume-up" style="font-size: 16px; color: #d6d6d6;"></i>');
 
             globalMusicTracks.tracks[index].ws.setMute(false);
@@ -1153,8 +1106,8 @@ $(document).ready(function(){
     });
 
 
-    
-    function moveBackTrackEndSliderWhenMovingTrack(el){
+
+    function moveBackTrackEndSliderWhenMovingTrack(el) {
         const left = $(el).css('left').split('px')[0];
         const width = $(el).css('width').split('px')[0];
 
@@ -1162,7 +1115,7 @@ $(document).ready(function(){
 
         const trackEndSliderPosition = parseFloat($('#trackEndSlider').css('left').split('px')[0]);
 
-        if(elementEnd > trackEndSliderPosition){
+        if (elementEnd > trackEndSliderPosition) {
             // move end slider
             $('#trackEndSlider').css('left', elementEnd + 'px');
             $('#activeTrackDiv').css('width', elementEnd + 'px');
@@ -1171,38 +1124,38 @@ $(document).ready(function(){
 
 
 
-    function updateHeightOfVerticalTrackLine(){
-        const containerHeight = document.getElementById('mixingContainer').clientHeight;   
-        
-        for(let i=0; i<globalMusicTracks.tracks.length; i++){
+    function updateHeightOfVerticalTrackLine() {
+        const containerHeight = document.getElementById('mixingContainer').clientHeight;
+
+        for (let i = 0; i < globalMusicTracks.tracks.length; i++) {
             $(`#verticalTrackBeginLine${globalMusicTracks.tracks[i].id}, #verticalTrackEndLine${globalMusicTracks.tracks[i].id}`).css('height', containerHeight + 'px');
         }
 
     }
 
 
-    $('#showHideTrackDetailPanelButton').on('click', function(e){
+    $('#showHideTrackDetailPanelButton').on('click', function (e) {
         $('#trackDetailPanel').show();
 
         // set width 100% or 300px
         const screenWidth = $(window).width();
 
-        if(screenWidth <= 590){
+        if (screenWidth <= 590) {
             const tabContentWidth = parseFloat($('.tabcontent').css('width').split('px')[0]);
             $('#trackDetailPanel').css('width', tabContentWidth + 'px');
         }
-        else{
+        else {
             $('#trackDetailPanel').css('width', '500px');
         }
 
         const panelWidth = parseFloat($('#trackDetailPanel').css('width').split('px')[0]);
         const tabcontentPaddingLeft = parseFloat($('.tabcontent').css('padding-left').split('px')[0]);
 
-        $('#trackDetailPanel').css('left',  '-' + tabcontentPaddingLeft + 'px');
+        $('#trackDetailPanel').css('left', '-' + tabcontentPaddingLeft + 'px');
     });
 
 
-    $('#closeTrackDetailPanelButton').on('click', function(){
+    $('#closeTrackDetailPanelButton').on('click', function () {
         const panelWidth = parseFloat($('#trackDetailPanel').css('width').split('px')[0]);
         const tabcontentPaddingLeft = parseFloat($('.tabcontent').css('padding-left').split('px')[0]);
 
@@ -1210,11 +1163,11 @@ $(document).ready(function(){
     });
 
 
-    
-    $('#appendDetailHere').on('click', '.deleteTrackButton', function(){
+
+    $('#appendDetailHere').on('click', '.deleteTrackButton', function () {
         globalDeleteTrackId = $(this).closest('.trackDetailListItem').attr('data-id');
 
-        const index = globalMusicTracks.tracks.findIndex(function(val){
+        const index = globalMusicTracks.tracks.findIndex(function (val) {
             return val.id === globalDeleteTrackId;
         });
 
@@ -1223,12 +1176,12 @@ $(document).ready(function(){
         $('#deleteTrackModal').css('display', 'flex');
     });
 
-    $('#appendDetailHere').on('blur', '.trackTitleInput', function(){
+    $('#appendDetailHere').on('blur', '.trackTitleInput', function () {
         const newTitle = $(this).val().trim();
 
         const trackId = $(this).closest('.trackDetailListItem').attr('data-id');
 
-        const index = globalMusicTracks.tracks.findIndex(function(val){
+        const index = globalMusicTracks.tracks.findIndex(function (val) {
             return val.id === trackId;
         });
 
@@ -1238,12 +1191,12 @@ $(document).ready(function(){
 
     });
 
-    $('#appendDetailHere').on('blur', '.trackDescription', function(){
+    $('#appendDetailHere').on('blur', '.trackDescription', function () {
         const newDescription = $(this).val().trim();
 
         const trackId = $(this).closest('.trackDetailListItem').attr('data-id');
 
-        const index = globalMusicTracks.tracks.findIndex(function(val){
+        const index = globalMusicTracks.tracks.findIndex(function (val) {
             return val.id === trackId;
         });
 
@@ -1252,13 +1205,13 @@ $(document).ready(function(){
 
 
 
-    $('.closeDeleteTrackModal').on('click', function(){
+    $('.closeDeleteTrackModal').on('click', function () {
         $('#deleteTrackModal').css('display', 'none');
     });
 
 
-    $('.confirmDeleteTrackButton').on('click', function(){
-        const index = globalMusicTracks.tracks.findIndex(function(val){
+    $('.confirmDeleteTrackButton').on('click', function () {
+        const index = globalMusicTracks.tracks.findIndex(function (val) {
             return val.id === globalDeleteTrackId;
         });
 
@@ -1283,7 +1236,7 @@ $(document).ready(function(){
         hideElementsIfNoTracks();
 
         // disble buttons and message if no tracks
-        if(globalMusicTracks.tracks.length === 0){
+        if (globalMusicTracks.tracks.length === 0) {
             $('.zoomOut').css('opacity', 0.5).prop('disabled', true);
             $('.zoomIn').css('opacity', 0.5).prop('disabled', true);
             $('#playWaveFormButton').css('opacity', 0.5).prop('disabled', true);
@@ -1294,14 +1247,14 @@ $(document).ready(function(){
     });
 
 
-    function updateDetailPanelHeight(){
+    function updateDetailPanelHeight() {
         const newHeight = parseFloat(document.getElementById('mixingContainer').style.height.split('px')[0]);
         $('#appendDetailHere').css('height', newHeight - 30 + 'px');
     }
 
 
-    function hideElementsIfNoTracks(){
-        if(globalMusicTracks.tracks.length === 0){
+    function hideElementsIfNoTracks() {
+        if (globalMusicTracks.tracks.length === 0) {
             $('#mixingContainer').css('height', 0);
             $('#showHideTrackDetailPanelButton').hide();
             $('#trackDetailPanel').hide();
@@ -1309,9 +1262,9 @@ $(document).ready(function(){
         }
     }
 
-    
 
-    function appendTrimSliderAndLock(trackId, trackTitle){
+
+    function appendTrimSliderAndLock(trackId, trackTitle) {
         $(`#waveform${trackId}`).append(`
             <div class='waveformOverlay' id='waveformOverlay${trackId}'></div>
             <div class='tackTitleAboveWaveform' id='tackTitleAboveWaveform${trackId}'>
@@ -1326,13 +1279,13 @@ $(document).ready(function(){
         `);
 
         // update slider position
-        $(`#trackLeftTrimSlider${trackId}`).css('transform',  `translate(-16px, -6px)`);
-        $(`#trackRightTrimSlider${trackId}`).css('transform',  `translate(-16px, -6px)`);
+        $(`#trackLeftTrimSlider${trackId}`).css('transform', `translate(-16px, -6px)`);
+        $(`#trackRightTrimSlider${trackId}`).css('transform', `translate(-16px, -6px)`);
 
     }
 
 
-    function appendVericalTrackBeginEndLines(trackId, waveformWidth, color){
+    function appendVericalTrackBeginEndLines(trackId, waveformWidth, color) {
         $('#mixingScrollDiv').append(`
             <div class='verticalTrackBeginLine' id='verticalTrackBeginLine${trackId}'></div>
             <div class='verticalTrackEndLine' id='verticalTrackEndLine${trackId}'></div>
@@ -1355,7 +1308,7 @@ $(document).ready(function(){
     }
 
 
-    function appendTrackDetail(trackId, trackTitle, trackDescription){
+    function appendTrackDetail(trackId, trackTitle, trackDescription) {
         $('#appendDetailHere').append(`
             <div class='trackDetailListItem' id='trackDetail${trackId}' data-id='${trackId}'>
                 <div style='padding-top: 5px;' class='disp-flex align-items--center flex-wrap-nowrap'>
@@ -1381,7 +1334,7 @@ $(document).ready(function(){
     }
 
 
-    function updateUIfromSavedData(musicTrackObj){
+    function updateUIfromSavedData(musicTrackObj) {
         // track
         $(`#waveform${musicTrackObj.id}`).css('left', musicTrackObj.left * globalCurrentZoomLevel + 'px');
 
@@ -1390,49 +1343,49 @@ $(document).ready(function(){
 
         $(`#trackLeftTrimSlider${musicTrackObj.id}`).css('left', musicTrackObj.leftTrim * globalCurrentZoomLevel + 'px');
         $(`#trackRightTrimSlider${musicTrackObj.id}`).css('left', musicTrackObj.rightTrim * globalCurrentZoomLevel + 'px');
-        
+
         $(`#verticalTrackBeginLine${musicTrackObj.id}`).css('left', (musicTrackObj.left + musicTrackObj.leftTrim) * globalCurrentZoomLevel + 'px');
         $(`#verticalTrackEndLine${musicTrackObj.id}`).css('left', (musicTrackObj.left + musicTrackObj.rightTrim) * globalCurrentZoomLevel + 'px');
 
-        if(musicTrackObj.lock === true){
+        if (musicTrackObj.lock === true) {
             $(`#lockIconAboveWaveformSpan${musicTrackObj.id}`).trigger('click');
         }
 
         // detail panel
         $(`#trackDetail${musicTrackObj.id}`).find('.volumeSlider').val(musicTrackObj.volume);
 
-        if(musicTrackObj.mute === true){
+        if (musicTrackObj.mute === true) {
             $(`#trackDetail${musicTrackObj.id}`).find('.muteButton').trigger('click');
         }
     }
 
 
-    function updateTrackEndSliderFromSavedData(position){
-        $('#trackEndSlider').css('left', position  * globalCurrentZoomLevel + 'px');
+    function updateTrackEndSliderFromSavedData(position) {
+        $('#trackEndSlider').css('left', position * globalCurrentZoomLevel + 'px');
         $('#activeTrackDiv').css('width', position * globalCurrentZoomLevel + 'px');
     }
 
 
-    
-    $('#mixingContainer').on('click', '.lockIconAboveWaveform', function(e){
+
+    $('#mixingContainer').on('click', '.lockIconAboveWaveform', function (e) {
         e.preventDefault();
-        
+
         const dataDrag = $(this).closest('.waveform').attr('data-drag');
 
         const trackId = $(this).closest('.waveform').attr('data-trackid');
 
-        const index = globalMusicTracks.tracks.findIndex(function(val){
+        const index = globalMusicTracks.tracks.findIndex(function (val) {
             return val.id === trackId;
         });
 
-        if(dataDrag === 'true'){
+        if (dataDrag === 'true') {
             $(this).closest('.waveform').attr('data-drag', 'false');
             $(`#lockIconAboveWaveformSpan${trackId}`).html(`<i class="fas fa-lock" style='color: rgba(170, 67, 18, 0.5); margin-left: 4px;'></i>`);
             $(`#waveformOverlay${trackId}`).css('background-color', '#dbb5b56b');
 
             globalMusicTracks.tracks[index].lock = true;
         }
-        else{
+        else {
             $(this).closest('.waveform').attr('data-drag', 'true');
             $(`#lockIconAboveWaveformSpan${trackId}`).html(`<i class="fas fa-lock-open" style='color: rgba(56, 120, 81, 0.5); margin-left: 4px;'></i>`);
             $(`#waveformOverlay${trackId}`).css('background-color', 'transparent');
@@ -1443,7 +1396,7 @@ $(document).ready(function(){
 
 
 
-    function loadProject(){
+    function loadProject() {
         // loading icon------------------------------------
         $('#loading').css('display', 'flex');
 
@@ -1456,7 +1409,7 @@ $(document).ready(function(){
 
         globalMusicTracks.total_duration = 57.72857142857143;
         globalMusicTracks.trackEndSliderPosition = 2694;
-        
+
         globalMusicTracks.tracks = [
             {
                 description: 'Alternative dance, edm, electro house, house, new rave.',
@@ -1473,11 +1426,7 @@ $(document).ready(function(){
                 playStarted: false,
                 rightTrim: 2736,
                 startPlayPixel: 509,
-                // track_end: 58.671,
-                // track_start: 7.955753289473684,
-                // track_will_end: 49.81245535714286,
-                // track_will_start: 2.9571428571428573,
-                audioFileUrl: './assets/calvin_harris_-_how_deep_is_your_love_(acapella).mp3',     
+                audioFileUrl: './assets/calvin_harris_-_how_deep_is_your_love_(acapella).mp3',
             },
             {
                 description: 'Soundtrack, Ambient Electronic, Downtempo, Instrumental.',
@@ -1494,10 +1443,6 @@ $(document).ready(function(){
                 playStarted: false,
                 rightTrim: 2838,
                 startPlayPixel: 0,
-                // track_end: 60.85867232240609,
-                // track_start: 0,
-                // track_will_end: 57.77034383103388,
-                // track_will_start: 0,
                 audioFileUrl: './assets/Good Ketsa_-_10_-_Memories_Renewed.mp3',
             },
             {
@@ -1515,10 +1460,6 @@ $(document).ready(function(){
                 playStarted: true,
                 rightTrim: 2875,
                 startPlayPixel: 193,
-                // track_end: 61.65169786568444,
-                // track_start: 4.138702429851042,
-                // track_will_end: 53.63161612593976,
-                // track_will_start: 0,
                 audioFileUrl: './assets/Tranquility_-_David_Renda_2019-04-26.mp3',
             },
             {
@@ -1536,15 +1477,11 @@ $(document).ready(function(){
                 playStarted: false,
                 rightTrim: 441.788,
                 startPlayPixel: 252,
-                // track_end: 9.47375,
-                // track_start: 0,
-                // track_will_end: 14.873750000000001,
-                // track_will_start: 5.3999999999999995,
                 audioFileUrl: './assets/Relaxing_background_ocean_edge.mp3',
             }
         ];
 
-        for(let i=0; i<globalMusicTracks.tracks.length; i++){
+        for (let i = 0; i < globalMusicTracks.tracks.length; i++) {
             audioFiles.push({
                 'audioFile': globalMusicTracks.tracks[i].audioFileUrl,
                 'isInputFile': false,
@@ -1552,46 +1489,41 @@ $(document).ready(function(){
         }
 
         loadNewAudioTrack('', '', 'false');
-    
+
     }
 
     function guid() {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
+                .toString(16)
+                .substring(1);
         }
         return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
             s4() + '-' + s4() + s4() + s4();
     }
 
 
-    function getTrackInfo(){
+    function getTrackInfo() {
         // get total duration
         const trackEndSliderPosition = Number($('#trackEndSlider').css('left').split('px')[0]);
         const totalDurationPixel = Number($('#displayScale').css('width').split('px')[0]);
         const durationPercentage = trackEndSliderPosition / totalDurationPixel;
-        // console.log('durationPercentage: ', durationPercentage);
 
         const totalActiveDurationInSec = 600 * durationPercentage;
-        // console.log('totalActiveDurationInSec: ', totalActiveDurationInSec);
 
         globalMusicTracks.trackEndSliderPosition = trackEndSliderPosition;
         globalMusicTracks.total_duration = totalActiveDurationInSec;
 
         // get trak info and globalMusicTrackX
         globalMusicTrackX = [];
-        for(let i=0; i<globalMusicTracks.tracks.length; i++){
+        for (let i = 0; i < globalMusicTracks.tracks.length; i++) {
             const trackLeft = Number($(`#waveform${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
 
             const leftTrimValue = Number($(`#trackLeftTrimSlider${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
             const rightTrimValue = Number($(`#trackRightTrimSlider${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
-            // log(leftTrimValue, rightTrimValue);
 
             const containerWidth = $(`#waveform${globalMusicTracks.tracks[i].id}`).width();
             const containerLeft = Number($(`#waveform${globalMusicTracks.tracks[i].id}`).css('left').split('px')[0]);
-            // log('containerWidth: ', containerWidth);
-            // log('containerLeft: ', containerLeft);
 
             const leftTrimPercentage = leftTrimValue / containerWidth;
             const rightTrimPercentage = rightTrimValue / containerWidth;
@@ -1607,7 +1539,6 @@ $(document).ready(function(){
                 left: trackLeft,
                 id: globalMusicTracks.tracks[i].id,
                 playStarted: false,
-                // playEnded: false,
                 leftTrim: leftTrimValue,
                 rightTrim: rightTrimValue,
                 startPlayPixel: startPlayPixel,
@@ -1628,16 +1559,14 @@ $(document).ready(function(){
             const trackWillStartPercentage = trackLeft / totalDurationPixel;
             const trackWillStartSec = 600 * trackWillStartPercentage;
             let trackEndDrutation = endPlaySec - startPlaySec;
-            // console.log(trackLeft, trackWillStartPercentage, trackWillStartSec);
-            // console.log('trackWillStartSec: ', trackWillStartSec);
 
             // re-calculate trackEndDrutation if track finishes before rightTrim slider
-            if(trackEndSliderPosition < (containerLeft + rightTrimValue)){
+            if (trackEndSliderPosition < (containerLeft + rightTrimValue)) {
                 // make duration 0 if track finishes before leftTrim slider
-                if(trackEndSliderPosition < (containerLeft + leftTrimValue)){
+                if (trackEndSliderPosition < (containerLeft + leftTrimValue)) {
                     trackEndDrutation = 0;
                 }
-                else{
+                else {
                     const pixelBetweenLeftTrimAndTrackEndSlider = trackEndSliderPosition - containerLeft - leftTrimValue;
                     const durationPercentage = pixelBetweenLeftTrimAndTrackEndSlider / containerWidth;
                     trackEndDrutation = globalMusicTracks.tracks[i].duration * durationPercentage;
@@ -1663,8 +1592,8 @@ $(document).ready(function(){
 
         }
 
-        console.log('globalMusicTracks: ', globalMusicTracks);
-        console.log('globalMusicTrackX: ', globalMusicTrackX);
+        // console.log('globalMusicTracks: ', globalMusicTracks);
+        // console.log('globalMusicTrackX: ', globalMusicTrackX);
     }
 
 
@@ -1685,10 +1614,8 @@ $(document).ready(function(){
         var description = "finalAudioFile";
 
         function get(file) {
-            // console.log('file: ', file);
-
             // if user upload audio file, user filereader to read contents of file
-            if(file.isInputFile === true){
+            if (file.isInputFile === true) {
                 return new Promise(function (resolve, reject) {
                     var reader = new FileReader;
                     reader.readAsArrayBuffer(file.audioFile);
@@ -1697,10 +1624,10 @@ $(document).ready(function(){
                     }
                 });
             }
-            else{
+            else {
                 // if url load
                 return fetch(file.audioFile)
-                    .then(function(response){
+                    .then(function (response) {
                         return response.arrayBuffer();
                     });
             }
@@ -1724,8 +1651,7 @@ $(document).ready(function(){
                 context = new OfflineAudioContext(2, len, 44100);
                 return Promise.all(data.map(function (buffer, i) {
                     return audio.decodeAudioData(buffer)
-                    .then(function (bufferSource) {
-                            console.log('i: ', i);
+                        .then(function (bufferSource) {
 
                             // change volume======================================
                             var gainNode = context.createGain();
@@ -1738,7 +1664,6 @@ $(document).ready(function(){
 
                             // set begin, offset and duration==============================
                             // use i to choose audio file
-                            // https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode/start
                             // source.start(when, offset, duration)
                             // when: time in seconds which sound should begin to play
                             // offset: the time, in seconds, within the audio buffer that playback should begin
@@ -1746,75 +1671,51 @@ $(document).ready(function(){
                             return source.start(globalMusicTracks.tracks[i].track_will_start.toFixed(2), globalMusicTracks.tracks[i].track_start.toFixed(2), globalMusicTracks.tracks[i].track_will_end.toFixed(2));
 
                         })
-                    //  .then(function (bufferSource) {
-                    //         console.log('i: ', i);
-                    //         var source = context.createBufferSource();
-                    //         source.buffer = bufferSource;
-                    //         source.connect(context.destination);
-
-                    //         // use i to choose audio file
-                    //         // https://developer.mozilla.org/en-US/docs/Web/API/AudioBufferSourceNode/start
-                    //         // source.start(when, offset, duration)
-                    //         // whem: time in seconds which sound should begin to play
-                    //         // offset: the time, in seconds, within the audio buffer that playback should begin
-                    //         // duration: duration of the sound to be played, specified in seconds
-                    //         if(i === 0){
-                    //             return source.start(2, 2);
-                    //         }
-                    //         else{
-                    //             return source.start();
-                    //         }
-                    //     })
                 }))
-                .then(function () {
-                    return context.startRendering()
-                })
-                .then(function (renderedBuffer) {
-                    return new Promise(function (resolve) {
-                        var mix = audio.createBufferSource();
-                        mix.buffer = renderedBuffer;
-                        mix.connect(audio.destination);
-                        mix.connect(mixedAudio);
-                        recorder = new MediaRecorder(mixedAudio.stream);
-                        recorder.start(0);
-                        mix.start(0);
-                        div.innerHTML = "Playing and recording tracks.";
-                        // stop playback and recorder in 60 seconds
-                        stopMix(duration, mix, recorder)
-
-                        recorder.ondataavailable = function (event) {
-                            chunks.push(event.data);
-                        };
-
-                        recorder.onstop = function (event) {
-                            var blob = new Blob(chunks, {
-                                "type": "audio/ogg; codecs=opus"
-                            });
-                            console.log("recording complete");
-                            resolve(blob)
-                        };
+                    .then(function () {
+                        return context.startRendering()
                     })
-                })
-                .then(function (blob) {
-                    console.log(blob);
-                    div.innerHTML = "Mixed audio tracks ready for download.";
-                    var audioDownload = URL.createObjectURL(blob);
-                    // var a = document.createElement("a");
-                    var a = document.getElementById('downloadFinalTrack');
-                    a.download = description + "." + blob.type.replace(/.+\/|;.+/g, "");
-                    a.href = audioDownload;
+                    .then(function (renderedBuffer) {
+                        return new Promise(function (resolve) {
+                            var mix = audio.createBufferSource();
+                            mix.buffer = renderedBuffer;
+                            mix.connect(audio.destination);
+                            mix.connect(mixedAudio);
+                            recorder = new MediaRecorder(mixedAudio.stream);
+                            recorder.start(0);
+                            mix.start(0);
+                            div.innerHTML = "Playing and recording tracks.";
+                            // stop playback and recorder in 60 seconds
+                            stopMix(duration, mix, recorder)
 
-                    $('#processingIcon').hide();
-                    $('#downloadFinalTrack').show();
-                    // a.innerHTML = a.download;
-                    // document.body.appendChild(a);
-                    // a.insertAdjacentHTML("afterend", "<br>");
-                    // player.src = audioDownload;
-                    // document.body.appendChild(player);
+                            recorder.ondataavailable = function (event) {
+                                chunks.push(event.data);
+                            };
 
-                    // loading icon------------------------------------
-                    $('#loading').css('display', 'none');
-                })
+                            recorder.onstop = function (event) {
+                                var blob = new Blob(chunks, {
+                                    "type": "audio/ogg; codecs=opus"
+                                });
+                                console.log("recording complete");
+                                resolve(blob)
+                            };
+                        })
+                    })
+                    .then(function (blob) {
+                        console.log(blob);
+                        div.innerHTML = "Mixed audio tracks ready for download.";
+                        var audioDownload = URL.createObjectURL(blob);
+                        var a = document.getElementById('downloadFinalTrack');
+                        a.download = description + "." + blob.type.replace(/.+\/|;.+/g, "");
+                        a.href = audioDownload;
+
+                        $('#processingIcon').hide();
+                        $('#downloadFinalTrack').show();
+                        $('.closeResultModal').css('display', 'flex');
+
+                        // loading icon------------------------------------
+                        $('#loading').css('display', 'none');
+                    })
             })
             .catch(function (e) {
                 console.log(e)

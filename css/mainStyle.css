@@ -66,37 +66,18 @@ section{
 #navbar .active{
     color: #3b3b3b;
 }
-/* 
-.btn{
-    border: none;
-    padding: 10px 24px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    border-radius: 4px;
-    color: black;
-    background-color: #dddddd;
-    display: inline-block;
-  }
-    .btn:hover{
-        background-color: #cccccc;
-  } */
 
 
-  #downloadFinalTrack{
-      background-color: #98b31a;
-      color: white;
+#downloadFinalTrack{
+    background-color: #98b31a;
+    color: white;
 }
 
 #questionButton{
-    /* position: absolute; */
     border-radius: 100px;
     border: 1px solid #b7b7b7;
     width: 40px;
     height: 40px;
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     font-size: 12px;
     background-color: white;
     color: black;
@@ -191,11 +172,7 @@ section{
 
 
   /* modal============================================== */
-  .confirmCombineTrackButton{
-      background-color: #e67474;
-      color: white;
-  }
-  .allModal{
+.allModal{
     width: 100%;
     height: 100%;
     display: none;
@@ -207,7 +184,6 @@ section{
     top: 0;
     z-index: 10;
     overflow: auto;
-    /* text-align: center; */
 }
 .allModal .all-modal-content{
     background-color: white;
@@ -218,8 +194,6 @@ section{
     border-radius: 10px;
     max-width: 500px;
     min-width: 165px;
-    /* top: 50%; */
-    /* transform: translateY(-50%); */
     position: relative;
     display: inline-block;
     text-align: left;
@@ -288,12 +262,10 @@ section{
 }
 .waveform{
     position: absolute;
-    /* border: 1px solid green; */
     top: 0;
     left: 0;
     cursor: ew-resize;
     z-index: 4;
-    /* will-change: left; */
 }
 .waveform wave{
     overflow-x: hidden !important;
@@ -393,17 +365,14 @@ section{
     border-radius: 3px;
     background-color: white;
     cursor: default;
-    /* will-change: left; */
 }
 .trackLeftTrimSlider{
     left: 0;
     z-index: 6;
-    /* background-color: red; */
 }
 .trackRightTrimSlider{
     left: 100%;
     z-index: 7;
-    /* background-color: blue; */
 }
 
 .tackTitleAboveWaveform{
@@ -424,10 +393,8 @@ section{
     height: 100px;
     position: absolute;
     top: 19px;
-    /* background-color: black; */
     z-index: 2;
     left: 0;
-    /* will-change: left; */
 }
 
 .lockIconAboveWaveform{

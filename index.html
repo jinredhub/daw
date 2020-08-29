@@ -4,12 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="keywords"
-        content="web, web design, web development, developer, freelance, freelancer, front-end, job, Jin Redmond, San Francisco, bay area, WEBデザイン,　ディレクション, Webサイト作成、　ウェブサイト、　作成">
-    <meta name="description" content="Multifunctional designer/fontend developer based in San Francisco">
     <title>Digital Audio Workstation</title>
     <!-- favicon -->
-    <!-- <link rel="shortcut icon" href="./images/favicon.ico"> -->
+    <link rel="shortcut icon" href="./assets/favicon.ico">
     <!-- google fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
     <!-- font awesome -->
@@ -33,22 +30,15 @@
 </head>
 
 <body>
-    <!-- <input id="files" 
-        type="file" 
-        name="files[]" 
-        accept="audio/*" 
-        multiple 
-        onchange="handleFilesSelect(this)" /> -->
-
-    <div id='navbar'>
+    <nav id='navbar'>
         <div>
             <a href="https://jinredhub.github.io/arpeggios/">Arpeggios</a>
-            <a href="#" class='active'>DAW</a>            
+            <a href="https://jinredhub.github.io/daw/" class='active'>DAW</a>            
         </div>
 
         <button type='button' id='questionButton'><i class="fas fa-question" style='font-size: 21px; color: #646464;'></i></button>
 
-    </div>
+    </nav>
 
     <section>    
         <div class="tabcontent">
@@ -128,7 +118,7 @@
                 Are you ready to merge all tracks?
             </div>
             <div class='allButtonDiv'>
-                <button type='button' class='btn confirmCombineTrackButton'>Yes</button>
+                <button type='button' class='btn btn-primary confirmCombineTrackButton'>Yes</button>
                 <button type='button' class='btn closeCombineTrackModal'>No</button>
             </div>
         </div>
@@ -163,12 +153,12 @@
     <div id="loading"><i class="fas fa-spinner fa-spin" style='color: #a8a8a8;'></i></div>
 
     <!-- footer -->
-    <div id='footer' class='disp-flex justify-content--center align-items--center flex-dir-col'>
+    <footer id='footer' class='disp-flex justify-content--center align-items--center flex-dir-col'>
         <div style='padding: 0 0 30px 0;'>
             <a class='btn github' href="https://github.com/jinredhub"><i class="fab fa-github-alt" style='color: black;'></i></a>
         </div>
         <p style='color: white;'>Jin Redmond</p>
-    </div>
+    </footer>
 
     <script src="js/main.js"></script>
 
