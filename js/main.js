@@ -1,7 +1,8 @@
 $(document).ready(function(){
 
     const globalMusicTracks = {
-        trackEndSliderPosition: 439,
+        total_duration: 0,
+        trackEndSliderPosition: 0,
         tracks: [],
     };
     const globalWaveformHeight = 100;
@@ -452,7 +453,10 @@ $(document).ready(function(){
             $('.zoomIn').css('opacity', 1).prop('disabled', false);
         }
         $('#playWaveFormButton').css('opacity', 1).prop('disabled', false);
-        $('#openCombineTracksModal').css('opacity', 1).prop('disabled', false);       
+        $('#openCombineTracksModal').css('opacity', 1).prop('disabled', false); 
+        
+        // hide empty track message
+        $('#trackIsEmptyDiv').css('display', 'none');
 
         // clear setScrollInterval
         if(setScrollInterval){
@@ -591,10 +595,9 @@ $(document).ready(function(){
                     backgroundColor: '#fafafa',
                     fillParent: true,
                     scrollParent: false,
-                    // minPxPerSec: 10,
                     height: globalWaveformHeight,
                     interact: false,
-                    pixelRatio: 6,  // 1 for faster rendering
+                    pixelRatio: 2,  // 1 for faster rendering
                     // autocenter: true,
                     minPxPerSec: 46.6 * globalCurrentZoomLevel,
                 });
@@ -684,17 +687,19 @@ $(document).ready(function(){
                 // console.log('userid: ', userId);
 
                 // let isAcceptableExtension = null;
-                // if(fileExtension == "mp3" || fileExtension == "m4a" || fileExtension == "wav"){
-                //     isAcceptableExtension = true;
-                // }
-                // else{
-                //     // if wong extansion
-                //     // console.log('worng extension');
-                //     // alert('Max file size : 3MB. Supported extensions: mp3, m4a, wav');
-                //     displayMessage('Max file size : 3MB. Supported extensions: mp3, m4a, wav.', 'message-danger');
+                if(fileExtension === "mp3" || fileExtension === "m4a" || fileExtension === "wav" || fileExtension === "ogg"){
+                    // isAcceptableExtension = true;
+                }
+                else{
+                    // if wong extansion
+                    // console.log('worng extension');
+                    // alert('Max file size : 3MB. Supported extensions: mp3, m4a, wav');
+                    // displayMessage('Max file size : 3MB. Supported extensions: mp3, m4a, wav.', 'message-danger');
 
-                //     return;
-                // }
+                    alert('Please upload audio file.');
+
+                    return;
+                }
 
                 // loading icon------------------------------------
                 $('#loading').css('display', 'flex');
@@ -720,6 +725,8 @@ $(document).ready(function(){
 
 
     $('#playWaveFormButton').on('click', function(){
+        // hide click here message
+        $('#clickToPlayTooltip').css('display', 'none');
 
         globalIsPlaying = d3.select('#animateThisBar').attr('data-isPlaying');
 
@@ -1182,7 +1189,6 @@ $(document).ready(function(){
 
         if(screenWidth <= 590){
             const tabContentWidth = parseFloat($('.tabcontent').css('width').split('px')[0]);
-            log('tabContentWidth: ', tabContentWidth);
             $('#trackDetailPanel').css('width', tabContentWidth + 'px');
         }
         else{
@@ -1276,12 +1282,14 @@ $(document).ready(function(){
         updateDetailPanelHeight();
         hideElementsIfNoTracks();
 
-        // disble buttons if no tracks
+        // disble buttons and message if no tracks
         if(globalMusicTracks.tracks.length === 0){
             $('.zoomOut').css('opacity', 0.5).prop('disabled', true);
             $('.zoomIn').css('opacity', 0.5).prop('disabled', true);
             $('#playWaveFormButton').css('opacity', 0.5).prop('disabled', true);
             $('#openCombineTracksModal').css('opacity', 0.5).prop('disabled', true);
+
+            $('#trackIsEmptyDiv').css('display', 'block');
         }
     });
 
@@ -1357,7 +1365,7 @@ $(document).ready(function(){
                     <button type='button' class='deleteTrackButton roundButton'><i class="fas fa-trash-alt" style='color: #d6d6d6;'></i></button>
                 </div>
 
-                <div class='disp-flex justify-content--space-between align-items--center padding-top-1'>
+                <div class='disp-flex justify-content--end align-items--center padding-top-1'>
                     <input class='volumeSlider' type='range' min='0' max='1' value='0.5' step='0.1'>                        
                     <button class='muteButton roundButton' type='button' data-mute='false'><i class="fas fa-volume-up" style='font-size: 16px; color: #d6d6d6;'></i></button> 
                 </div>
@@ -1434,7 +1442,8 @@ $(document).ready(function(){
     });
 
 
-    $('#loadProjectButton').on('click', function(){
+
+    function loadProject(){
         // loading icon------------------------------------
         $('#loading').css('display', 'flex');
 
@@ -1444,52 +1453,95 @@ $(document).ready(function(){
         $('.verticalTrackBeginLine').remove();
         $('.verticalTrackEndLine').remove();
         $('.trackDetailListItem').remove();
+
+        globalMusicTracks.total_duration = 57.72857142857143;
+        globalMusicTracks.trackEndSliderPosition = 2694;
         
         globalMusicTracks.tracks = [
             {
-                description: 'this is my track description',
-                duration: 9.6869375,
-                // id: "6290c59f-32d8-ddd8-ed8f-b69ff116d3fa",
+                description: 'Alternative dance, edm, electro house, house, new rave.',
+                duration: 58.671,
                 mute: false,
-                title: "Track97",
-                volume: 0.2,
+                title: "calvin_harris_-_how_deep_is_your_love_(acapella).mp3",
+                volume: 0.3,
                 lock: false,
-
-                containerWidth: 451.725,
-                endPlayPixel: 325,
-                track_end: 4.975083291825779,
-                id: "9073f209-ca17-5f15-d41e-a3135c7bb926",
-                left: 93,
-                leftTrim: 94,
+                containerWidth: 2736,
+                endPlayPixel: 2874,
+                id: "eeeaaa2f-acee-a7c9-878d-d97777927170",
+                left: 138,
+                leftTrim: 371,
                 playStarted: false,
-                rightTrim: 232,
-                startPlayPixel: 187,
-                track_start: 2.01576650617079,
-
-                audioFileUrl: './assets/testAudio.mp3',
+                rightTrim: 2736,
+                startPlayPixel: 509,
+                // track_end: 58.671,
+                // track_start: 7.955753289473684,
+                // track_will_end: 49.81245535714286,
+                // track_will_start: 2.9571428571428573,
+                audioFileUrl: './assets/calvin_harris_-_how_deep_is_your_love_(acapella).mp3',     
             },
             {
-                description: 'this is my 2nd track description',
-                duration: 9.6869375,
-                // id: "6290c59f-32d8-ddd8-ed8f-b69ff116d3fa",
+                description: 'Soundtrack, Ambient Electronic, Downtempo, Instrumental.',
+                duration: 65,
                 mute: false,
-                title: "Track123",
-                volume: 0.6,
+                title: "Good Ketsa_-_10_-_Memories_Renewed.mp3",
+                volume: 0.5,
                 lock: false,
-
-                containerWidth: 451.725,
-                endPlayPixel: 422,
-                track_end: 8.449063866290333,
-                id: "3073f209-ca17-5f15-d41e-a3135c7bb926",
-                left: 28,
-                leftTrim: 16,
+                containerWidth: 3031.14,
+                endPlayPixel: 2838,
+                id: "398973ee-75fe-0562-a411-c570f2e3f81e",
+                left: 0,
+                leftTrim: 0,
                 playStarted: false,
-                rightTrim: 394,
-                startPlayPixel: 44,
-                track_start: 0.3431091925397089,
-
-                audioFileUrl: './assets/testAudio.mp3',
+                rightTrim: 2838,
+                startPlayPixel: 0,
+                // track_end: 60.85867232240609,
+                // track_start: 0,
+                // track_will_end: 57.77034383103388,
+                // track_will_start: 0,
+                audioFileUrl: './assets/Good Ketsa_-_10_-_Memories_Renewed.mp3',
             },
+            {
+                description: "Relaxation and tranquility with calming soothing instrumental.",
+                duration: 68,
+                mute: false,
+                title: "Tranquility_-_David_Renda_2019-04-26.mp3",
+                volume: 0.1,
+                lock: false,
+                containerWidth: 3171.04,
+                endPlayPixel: 2875,
+                id: "de5a560e-b185-fc9a-a06f-0f9bcbf11542",
+                left: 0,
+                leftTrim: 193,
+                playStarted: true,
+                rightTrim: 2875,
+                startPlayPixel: 193,
+                // track_end: 61.65169786568444,
+                // track_start: 4.138702429851042,
+                // track_will_end: 53.63161612593976,
+                // track_will_start: 0,
+                audioFileUrl: './assets/Tranquility_-_David_Renda_2019-04-26.mp3',
+            },
+            {
+                description: 'Soothing relaxation ocean edge background music.',
+                duration: 9.47375,
+                mute: false,
+                title: "Relaxing_background_ocean_edge.mp3",
+                volume: 0.1,
+                lock: false,
+                containerWidth: 441.788,
+                endPlayPixel: 693.788,
+                id: "f3d577ef-c228-2b62-1bcc-21d8af8bcb48",
+                left: 252,
+                leftTrim: 0,
+                playStarted: false,
+                rightTrim: 441.788,
+                startPlayPixel: 252,
+                // track_end: 9.47375,
+                // track_start: 0,
+                // track_will_end: 14.873750000000001,
+                // track_will_start: 5.3999999999999995,
+                audioFileUrl: './assets/Relaxing_background_ocean_edge.mp3',
+            }
         ];
 
         for(let i=0; i<globalMusicTracks.tracks.length; i++){
@@ -1500,9 +1552,8 @@ $(document).ready(function(){
         }
 
         loadNewAudioTrack('', '', 'false');
-
-    });
-
+    
+    }
 
     function guid() {
         function s4() {
@@ -1525,6 +1576,7 @@ $(document).ready(function(){
         const totalActiveDurationInSec = 600 * durationPercentage;
         // console.log('totalActiveDurationInSec: ', totalActiveDurationInSec);
 
+        globalMusicTracks.trackEndSliderPosition = trackEndSliderPosition;
         globalMusicTracks.total_duration = totalActiveDurationInSec;
 
         // get trak info and globalMusicTrackX
@@ -1598,15 +1650,25 @@ $(document).ready(function(){
             globalMusicTracks.tracks[i].title = newTitle;
             globalMusicTracks.tracks[i].volume = newVolume;
             globalMusicTracks.tracks[i].mute = newMute;
-            globalMusicTracks.tracks[i].track_start = trackWillStartSec + startPlaySec;
-            globalMusicTracks.tracks[i].track_end = trackWillStartSec + endPlaySec;
-            globalMusicTracks.tracks[i].track_will_start = trackWillStartSec + startPlaySec;
+            globalMusicTracks.tracks[i].track_start = startPlaySec;
+            globalMusicTracks.tracks[i].track_end = endPlaySec;
+            globalMusicTracks.tracks[i].track_will_start = trackWillStartSec;
             globalMusicTracks.tracks[i].track_will_end = trackWillStartSec + trackEndDrutation;
+            globalMusicTracks.tracks[i].left = trackLeft;
+            globalMusicTracks.tracks[i].leftTrim = leftTrimValue;
+            globalMusicTracks.tracks[i].rightTrim = rightTrimValue;
+            globalMusicTracks.tracks[i].startPlayPixel = startPlayPixel;
+            globalMusicTracks.tracks[i].endPlayPixel = endPlayPixel;
+            globalMusicTracks.tracks[i].containerWidth = containerWidth;
+
         }
 
         console.log('globalMusicTracks: ', globalMusicTracks);
         console.log('globalMusicTrackX: ', globalMusicTrackX);
     }
+
+
+    loadProject();
 
     // =============================================================
 
@@ -1681,7 +1743,7 @@ $(document).ready(function(){
                             // when: time in seconds which sound should begin to play
                             // offset: the time, in seconds, within the audio buffer that playback should begin
                             // duration: duration of the sound to be played, specified in seconds
-                            return source.start(globalMusicTracks.tracks[i].track_start.toFixed(2), globalMusicTracks.tracks[i].track_will_start.toFixed(2), globalMusicTracks.tracks[i].track_will_end.toFixed(2));
+                            return source.start(globalMusicTracks.tracks[i].track_will_start.toFixed(2), globalMusicTracks.tracks[i].track_start.toFixed(2), globalMusicTracks.tracks[i].track_will_end.toFixed(2));
 
                         })
                     //  .then(function (bufferSource) {

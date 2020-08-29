@@ -42,7 +42,7 @@
 
     <div id='navbar'>
         <div>
-            <a href="#">Arpeggios</a>
+            <a href="https://jinredhub.github.io/arpeggios/">Arpeggios</a>
             <a href="#" class='active'>DAW</a>            
         </div>
 
@@ -60,16 +60,23 @@
                     
                     <button type='button' class='btn zoomOut roundButton' disabled><i class="fas fa-search-minus"></i></button>
                     <button type='button' class='btn zoomIn roundButton' disabled><i class="fas fa-search-plus"></i></button>
-    
-                    <button type='button' id='loadProjectButton'>load</button>
                 </div>
                 <div class='disp-flex topRightButtonDiv'>
-                    <button type='button' id='playWaveFormButton' class='btn roundButton' disabled><i class="fas fa-play" style="font-size: 14px"></i></button>
+                    <div class='tooltip'>
+                        <button type='button' id='playWaveFormButton' class='btn roundButton' disabled><i class="fas fa-play" style="font-size: 14px"></i></button>
+                        <div class='tooltipText' id='clickToPlayTooltip'>Click to play mixed tracks</div>
+                    </div>
                     <button type='button' id='openCombineTracksModal' class='btn roundButton' disabled><i class="fas fa-cloud-upload-alt"></i></button>
                 </div>
             </div>
             
             <div style='position: relative;'>
+                <div id='trackIsEmptyDiv'>
+                    <img src="./assets/undraw_Notify_re_65on.png" alt="image of not found">
+                    <h3>Tracks are empty</h3>
+                    <p>Upload audio files to start mixing!</p>
+                </div>
+
                 <!-- panel detail -->
                 <div id='trackDetailPanel'>
                     <div id='trackDetailPanelTopDiv' class='disp-flex justify-content--end align-items--flex-end'>
@@ -78,9 +85,7 @@
                     <div id='appendDetailHere'></div>
                     <div style='height: 50px;'></div>
                 </div>
-    
-                <div id='log'></div>
-    
+        
                 <button type='button' id='showHideTrackDetailPanelButton'><i class="fas fa-chevron-right"></i></button>
     
                 <div id='mixingContainer'>
@@ -132,7 +137,7 @@
     <!-- result modal -->
     <div id='resultModal' class='allModal'>
         <div class="all-modal-content">
-            <div class='closeModal closeResultModal'>&times;</div>
+            <div class='closeModal closeResultModal'><i style='color: #646464;' class="fas fa-times"></i></div>
             <div class='modalHeader'>
                 <div id='thisDiv'></div>
             </div>
@@ -160,9 +165,9 @@
     <!-- footer -->
     <div id='footer' class='disp-flex justify-content--center align-items--center flex-dir-col'>
         <div style='padding: 0 0 30px 0;'>
-            <a class='btn github' href="https://github.com/jinredhub"><i class="fab fa-github-alt"></i></a>
+            <a class='btn github' href="https://github.com/jinredhub"><i class="fab fa-github-alt" style='color: black;'></i></a>
         </div>
-        <p>Jin Redmond</p>
+        <p style='color: white;'>Jin Redmond</p>
     </div>
 
     <script src="js/main.js"></script>

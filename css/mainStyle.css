@@ -7,15 +7,16 @@
 
 body{
     font-family: 'Quicksand', sans-serif;
+    background-color: #b2b7d2;
 }
 section{
     max-width: 900px;
     margin: 0 auto;
+    padding: 0 10px;
 }
 
   
 .tabcontent{
-    /* display:none; */
     padding: 6px 0;
     border: none;
     background-color: white;
@@ -23,9 +24,10 @@ section{
     border-radius: 10px;
     padding: 50px 20px;  
     padding-top: 60px;
-    overflow-x: hidden;
     top: 0;
     margin: 60px 0;
+    /* need this to hide trackDetailPanel */
+    overflow-x: hidden;
 }
 
 #loading{
@@ -53,6 +55,7 @@ section{
     position: sticky;
     left: 0;
     top: 0;
+    z-index: 100;
 }
 #navbar a{
     color: #989898;
@@ -116,6 +119,39 @@ section{
 }
 
 
+/* tooltip---------------------------- */
+.tooltip{
+    position: relative;
+}
+.tooltip .tooltipText{
+    width: 270px;
+    text-align: center;
+    color: black;
+    padding: 10px 0;
+    position: absolute;
+    bottom: 120%;
+    left: -173px;
+    display: block;
+    border: 2px solid #ffb161;
+    border-radius: 5px;
+    background-color: white;
+    z-index: 10;
+}
+.tooltipText:after{
+    content: "";
+    position: absolute;
+    top: 104%;
+    right: 25%;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #555;
+    margin-left: -10px;
+}
+/* end tooltip---------------------------- */
+
+
 /*custom input file---------------*/
 .inputfile{
     width: 0.1px;
@@ -155,6 +191,10 @@ section{
 
 
   /* modal============================================== */
+  .confirmCombineTrackButton{
+      background-color: #e67474;
+      color: white;
+  }
   .allModal{
     width: 100%;
     height: 100%;
@@ -476,9 +516,9 @@ section{
     border-bottom: 1px solid #8a8a8a;
 }
 .trackDetailListItem .trackTitleInput{
-    background-color: #ffffff17;
+    background-color: transparent;
     color: #d9d9d9;
-    border: 1px solid #808080;
+    border: none;
     width: 100%;
     padding: 2px;
     border-radius: 4px;
@@ -496,6 +536,7 @@ section{
     appearance: none !important;
     box-shadow: none;
     border: 1px solid #808080;
+    padding: 4px;
 }
 .trackDescription::placeholder{
     color: #a5a5a5;
@@ -532,7 +573,7 @@ section{
 }
 .volumeSlider{
     -webkit-appearance: none;
-    width: 160px;
+    width: 125px;
     height: 6px;
     border-radius: 5px;  
     background: #d3d3d3;
@@ -575,11 +616,25 @@ section{
 
 
 
+/* track is empty================================== */
+#trackIsEmptyDiv{
+    text-align: center;
+}
+#trackIsEmptyDiv h3{
+    font-size: 32px;
+}
+#trackIsEmptyDiv img{
+    width: 70%;    
+}
+/* end track is empty================================== */
+
+
+
 /* footer ======================================== */
 #footer{
     color: #626262;
     height: 130px;
-    background-color: white;
+    background-color: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -602,11 +657,12 @@ section{
     background-color: #015a9e;
 }
 #footer .github{
-    background-color: #868e96;
+    background-color: white;
 }
 #footer .github:hover{
-    background-color: #727b84;
+    background-color: #e0e0e0;
 }
 #footer .github:active{
-    background-color: #676d74;
+    background-color: #d3d3d3;
 }
+
