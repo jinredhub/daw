@@ -47,7 +47,6 @@ $(document).ready(function () {
 
             getTrackInfo();
 
-            console.log('audioFiles: ', audioFiles);
             handleFilesSelect(audioFiles);
         }
         else {
@@ -623,8 +622,12 @@ $(document).ready(function () {
 
                     updateTrackEndSliderFromSavedData(globalMusicTracks.trackEndSliderPosition);
 
-                    // loading icon------------------------------------
-                    $('#loading').css('display', 'none');
+                    // ready event fires when waveform drwan but it takes few more secs.
+                    // provide 2 sec before loading animation disappear.
+                    setTimeout(function(){
+                        // loading icon------------------------------------
+                        $('#loading').css('display', 'none');
+                    }, 2000);
 
                 });
 
@@ -1416,7 +1419,7 @@ $(document).ready(function () {
                 duration: 58.671,
                 mute: false,
                 title: "calvin_harris_-_how_deep_is_your_love_(acapella).mp3",
-                volume: 0.3,
+                volume: 0.4,
                 lock: false,
                 containerWidth: 2736,
                 endPlayPixel: 2874,
@@ -1527,8 +1530,8 @@ $(document).ready(function () {
 
             const leftTrimPercentage = leftTrimValue / containerWidth;
             const rightTrimPercentage = rightTrimValue / containerWidth;
-            console.log(leftTrimPercentage, rightTrimPercentage);
 
+            // update web audio api 'offset' value
             const startPlaySec = globalMusicTracks.tracks[i].duration * leftTrimPercentage;
             const endPlaySec = globalMusicTracks.tracks[i].duration * rightTrimPercentage;
 
@@ -1555,23 +1558,24 @@ $(document).ready(function () {
             const newVolume = $(`#trackDetail${globalMusicTracks.tracks[i].id}`).find('.volumeSlider').val();
             const newMute = $(`#trackDetail${globalMusicTracks.tracks[i].id}`).find('.muteButton').attr('data-mute');
 
-            // update start duration relative to total duration
-            const trackWillStartPercentage = trackLeft / totalDurationPixel;
+            // update start duration relative to total duration. Web audio api 'start' value
+            const trackWillStartPercentage = (trackLeft + leftTrimValue) / totalDurationPixel;
             const trackWillStartSec = 600 * trackWillStartPercentage;
-            let trackEndDrutation = endPlaySec - startPlaySec;
+
+            // update track will end. Web audio api 'duration' value
+            let trackEndDurationIncludesOffsetPercentage = rightTrimValue / containerWidth;
+            let trackEndDurationIncludesOffsetSec = globalMusicTracks.tracks[i].duration * trackEndDurationIncludesOffsetPercentage;
 
             // re-calculate trackEndDrutation if track finishes before rightTrim slider
             if (trackEndSliderPosition < (containerLeft + rightTrimValue)) {
                 // make duration 0 if track finishes before leftTrim slider
                 if (trackEndSliderPosition < (containerLeft + leftTrimValue)) {
-                    trackEndDrutation = 0;
+                    trackEndDurationIncludesOffsetSec = 0;
                 }
                 else {
-                    const pixelBetweenLeftTrimAndTrackEndSlider = trackEndSliderPosition - containerLeft - leftTrimValue;
-                    const durationPercentage = pixelBetweenLeftTrimAndTrackEndSlider / containerWidth;
-                    trackEndDrutation = globalMusicTracks.tracks[i].duration * durationPercentage;
-                    console.log('durationPercentage: ', durationPercentage);
-                    console.log('trackEndDrutation: ', trackEndDrutation);
+                    // if track finishes before right slider
+                    trackEndDurationExcludeOffsetPercentage = (trackEndSliderPosition - containerLeft - leftTrimValue) / containerWidth;
+                    trackEndDurationExcludeOffsetSec = globalMusicTracks.tracks[i].duration * trackEndDurationExcludeOffsetPercentage;                    
                 }
             }
 
@@ -1582,7 +1586,7 @@ $(document).ready(function () {
             globalMusicTracks.tracks[i].track_start = startPlaySec;
             globalMusicTracks.tracks[i].track_end = endPlaySec;
             globalMusicTracks.tracks[i].track_will_start = trackWillStartSec;
-            globalMusicTracks.tracks[i].track_will_end = trackWillStartSec + trackEndDrutation;
+            globalMusicTracks.tracks[i].track_will_end = trackWillStartSec + trackEndDurationExcludeOffsetSec;
             globalMusicTracks.tracks[i].left = trackLeft;
             globalMusicTracks.tracks[i].leftTrim = leftTrimValue;
             globalMusicTracks.tracks[i].rightTrim = rightTrimValue;
@@ -1605,7 +1609,7 @@ $(document).ready(function () {
 
     function handleFilesSelect(files) {
         div.innerHTML = "loading...";
-        var duration = (globalMusicTracks.total_duration * 1000).toFixed(2);
+        var duration = (globalMusicTracks.total_duration * 1000).toFixed(0);
         var chunks = [];
         var audio = new AudioContext();
         var mixedAudio = audio.createMediaStreamDestination();
@@ -1644,7 +1648,6 @@ $(document).ready(function () {
 
         Promise.all(files.map(get))
             .then(function (data) {
-                console.log('data: ', data[0]);
                 var len = Math.max.apply(Math, data.map(function (buffer) {
                     return buffer.byteLength
                 }));
@@ -1665,10 +1668,9 @@ $(document).ready(function () {
                             // set begin, offset and duration==============================
                             // use i to choose audio file
                             // source.start(when, offset, duration)
-                            // when: time in seconds which sound should begin to play
-                            // offset: the time, in seconds, within the audio buffer that playback should begin
-                            // duration: duration of the sound to be played, specified in seconds
-                            return source.start(globalMusicTracks.tracks[i].track_will_start.toFixed(2), globalMusicTracks.tracks[i].track_start.toFixed(2), globalMusicTracks.tracks[i].track_will_end.toFixed(2));
+
+                            return source.start(context.currentTime + globalMusicTracks.tracks[i].track_will_start.toFixed(1), globalMusicTracks.tracks[i].track_start.toFixed(1), globalMusicTracks.tracks[i].track_will_end.toFixed(1));
+                            
 
                         })
                 }))
@@ -1702,7 +1704,6 @@ $(document).ready(function () {
                         })
                     })
                     .then(function (blob) {
-                        console.log(blob);
                         div.innerHTML = "Mixed audio tracks ready for download.";
                         var audioDownload = URL.createObjectURL(blob);
                         var a = document.getElementById('downloadFinalTrack');
