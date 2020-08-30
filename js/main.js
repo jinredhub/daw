@@ -1564,13 +1564,13 @@ $(document).ready(function () {
 
             // update track will end. Web audio api 'duration' value
             let trackEndDurationIncludesOffsetPercentage = rightTrimValue / containerWidth;
-            let trackEndDurationIncludesOffsetSec = globalMusicTracks.tracks[i].duration * trackEndDurationIncludesOffsetPercentage;
+            let trackEndDurationExcludeOffsetSec = globalMusicTracks.tracks[i].duration * trackEndDurationIncludesOffsetPercentage;
 
             // re-calculate trackEndDrutation if track finishes before rightTrim slider
             if (trackEndSliderPosition < (containerLeft + rightTrimValue)) {
                 // make duration 0 if track finishes before leftTrim slider
                 if (trackEndSliderPosition < (containerLeft + leftTrimValue)) {
-                    trackEndDurationIncludesOffsetSec = 0;
+                    trackEndDurationExcludeOffsetSec = 0;
                 }
                 else {
                     // if track finishes before right slider
@@ -1601,7 +1601,7 @@ $(document).ready(function () {
     }
 
 
-    loadProject();
+    // loadProject();
 
     // =============================================================
 
@@ -1611,7 +1611,10 @@ $(document).ready(function () {
         div.innerHTML = "loading...";
         var duration = (globalMusicTracks.total_duration * 1000).toFixed(0);
         var chunks = [];
+        var channels = [[0, 1], [1, 0]];
         var audio = new AudioContext();
+        var merger = audio.createChannelMerger(2);
+        var splitter = audio.createChannelSplitter(2);
         var mixedAudio = audio.createMediaStreamDestination();
         var context;
         var recorder;
@@ -1648,62 +1651,60 @@ $(document).ready(function () {
 
         Promise.all(files.map(get))
             .then(function (data) {
-                var len = Math.max.apply(Math, data.map(function (buffer) {
-                    return buffer.byteLength
-                }));
-                context = new OfflineAudioContext(2, len, 44100);
-                return Promise.all(data.map(function (buffer, i) {
+                // var len = Math.max.apply(Math, data.map(function (buffer) {
+                //     return buffer.byteLength
+                // }));
+                // context = new OfflineAudioContext(2, len, 44100);
+                return Promise.all(data.map(function (buffer, index) {
                     return audio.decodeAudioData(buffer)
                         .then(function (bufferSource) {
 
                             // change volume======================================
-                            var gainNode = context.createGain();
-                            var source = context.createBufferSource();
+                            // var gainNode = audio.createGain();
+                            // var source = audio.createBufferSource();
+                            // source.buffer = bufferSource;
+                            // source.connect(gainNode);
+                            var channel = channels[index];
+                            var source = audio.createBufferSource();
                             source.buffer = bufferSource;
-                            source.connect(gainNode);
+                            source.connect(splitter);
+                            splitter.connect(merger, channel[0], channel[1]);          
+                            return source
+                            
                             // set volume
-                            gainNode.gain.setValueAtTime(globalMusicTracks.tracks[i].volume, context.currentTime);
-                            gainNode.connect(context.destination);
+                            // gainNode.gain.setValueAtTime(globalMusicTracks.tracks[i].volume, audio.currentTime);
+                            // gainNode.connect(context.destination);
+                            // gainNode.connect(splitter);
+                           
 
                             // set begin, offset and duration==============================
                             // use i to choose audio file
                             // source.start(when, offset, duration)
 
-                            return source.start(context.currentTime + globalMusicTracks.tracks[i].track_will_start.toFixed(1), globalMusicTracks.tracks[i].track_start.toFixed(1), globalMusicTracks.tracks[i].track_will_end.toFixed(1));
+                            // return source.start(context.currentTime + globalMusicTracks.tracks[i].track_will_start.toFixed(1), globalMusicTracks.tracks[i].track_start.toFixed(1), globalMusicTracks.tracks[i].track_will_end.toFixed(1));
                             
 
                         })
                 }))
-                    .then(function () {
-                        return context.startRendering()
-                    })
-                    .then(function (renderedBuffer) {
-                        return new Promise(function (resolve) {
-                            var mix = audio.createBufferSource();
-                            mix.buffer = renderedBuffer;
-                            mix.connect(audio.destination);
-                            mix.connect(mixedAudio);
-                            recorder = new MediaRecorder(mixedAudio.stream);
-                            recorder.start(0);
-                            mix.start(0);
-                            div.innerHTML = "Playing and recording tracks.";
-                            // stop playback and recorder in 60 seconds
-                            stopMix(duration, mix, recorder)
+                .then(function(audionodes){
+                    merger.connect(mixedAudio);
+                    merger.connect(audio.destination);
+                    recorder = new MediaRecorder(mixedAudio.stream);
+                    recorder.start(0);
+                    audionodes.forEach(function(node){
+                        node.start(0);
+                    });
 
-                            recorder.ondataavailable = function (event) {
-                                chunks.push(event.data);
-                            };
+                    stopMix(duration, ...audionodes, recorder);
 
-                            recorder.onstop = function (event) {
-                                var blob = new Blob(chunks, {
-                                    "type": "audio/ogg; codecs=opus"
-                                });
-                                console.log("recording complete");
-                                resolve(blob)
-                            };
-                        })
-                    })
-                    .then(function (blob) {
+                    recorder.ondataavailable = function(event){
+                        chunks.push(event.data);
+                    };
+
+                    recorder.onstop = function(event){
+                        var blob = new Blob(chunks, {
+                            "type": "audio/ogg; codecs=opus"
+                        });
                         div.innerHTML = "Mixed audio tracks ready for download.";
                         var audioDownload = URL.createObjectURL(blob);
                         var a = document.getElementById('downloadFinalTrack');
@@ -1713,10 +1714,51 @@ $(document).ready(function () {
                         $('#processingIcon').hide();
                         $('#downloadFinalTrack').show();
                         $('.closeResultModal').css('display', 'flex');
+                    }
+                })
+                    // .then(function () {
+                    //     return context.startRendering()
+                    // })
+                    // .then(function (renderedBuffer) {
+                    //     return new Promise(function (resolve) {
+                    //         var mix = audio.createBufferSource();
+                    //         mix.buffer = renderedBuffer;
+                    //         mix.connect(audio.destination);
+                    //         mix.connect(mixedAudio);
+                    //         recorder = new MediaRecorder(mixedAudio.stream);
+                    //         recorder.start(0);
+                    //         mix.start(0);
+                    //         div.innerHTML = "Playing and recording tracks.";
+                    //         // stop playback and recorder in 60 seconds
+                    //         stopMix(duration, mix, recorder)
 
-                        // loading icon------------------------------------
-                        $('#loading').css('display', 'none');
-                    })
+                    //         recorder.ondataavailable = function (event) {
+                    //             chunks.push(event.data);
+                    //         };
+
+                    //         recorder.onstop = function (event) {
+                    //             var blob = new Blob(chunks, {
+                    //                 "type": "audio/ogg; codecs=opus"
+                    //             });
+                    //             console.log("recording complete");
+                    //             resolve(blob)
+                    //         };
+                    //     })
+                    // })
+                    // .then(function (blob) {
+                    //     div.innerHTML = "Mixed audio tracks ready for download.";
+                    //     var audioDownload = URL.createObjectURL(blob);
+                    //     var a = document.getElementById('downloadFinalTrack');
+                    //     a.download = description + "." + blob.type.replace(/.+\/|;.+/g, "");
+                    //     a.href = audioDownload;
+
+                    //     $('#processingIcon').hide();
+                    //     $('#downloadFinalTrack').show();
+                    //     $('.closeResultModal').css('display', 'flex');
+
+                    //     // loading icon------------------------------------
+                    //     $('#loading').css('display', 'none');
+                    // })
             })
             .catch(function (e) {
                 alert(e);
