@@ -1652,6 +1652,7 @@ $(document).ready(function () {
                 var len = Math.max.apply(Math, data.map(function (buffer) {
                     return buffer.byteLength
                 }));
+                var OfflineAudioContext = window.OfflineAudioContext || window.webkitOfflineAudioContext;
                 context = new OfflineAudioContext(2, len, 44100);
                 return Promise.all(data.map(function (buffer, i) {
                     return audio.decodeAudioData(buffer)
