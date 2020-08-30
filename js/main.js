@@ -1612,6 +1612,7 @@ $(document).ready(function () {
         var duration = (globalMusicTracks.total_duration * 1000).toFixed(0);
         var chunks = [];
         var channels = [[0, 1], [1, 0]];
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
         var audio = new AudioContext();
         var merger = audio.createChannelMerger(2);
         var splitter = audio.createChannelSplitter(2);
