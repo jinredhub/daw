@@ -48,7 +48,7 @@ $(document).ready(function () {
         if(supportedOs === true && supportedBrowser === true){
             $('#combineTrackModal').css('display', 'flex');
         }else{
-            showErrorModal("Merging tracks works only on Chrome, Firefox and Edge desktop browswer.");
+            showErrorModal("Exporting final merged tracks works only on Chrome, Firefox and Edge desktop browswer.");
         }
     });
 
