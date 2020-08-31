@@ -605,7 +605,6 @@ $(document).ready(function () {
                     waveColor: '#949494',
                     progressColor: '#444',
                     backgroundColor: '#fafafa',
-                    fillParent: true,
                     scrollParent: false,
                     height: globalWaveformHeight,
                     interact: false,
