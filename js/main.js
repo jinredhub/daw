@@ -695,7 +695,7 @@ $(document).ready(function () {
             }
             else {
                 // if wong extansion
-                showErrorModal("Please upload supported audio extensions: mp3, m4a, wav, ogg");
+                showErrorModal("Please upload supported audio extensions: mp3, m4a, wav, ogg.");
 
                 return;
             }

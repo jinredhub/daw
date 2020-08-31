@@ -377,6 +377,7 @@ section{
 
 .tackTitleAboveWaveform{
     width: 100%;
+    min-width: 1000px;
     height: 20px;
     background-color: transparent;
     position: absolute;
