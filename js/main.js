@@ -663,11 +663,11 @@ $(document).ready(function () {
 
                   
                     // ready event fires when waveform drwan but it takes few more secs.
-                    // provide 2 sec before loading animation disappear.
+                    // provide 3 sec before loading animation disappear.
                     setTimeout(function(){
                         // loading icon------------------------------------
                         $('#loading').css('display', 'none');
-                    }, 2000);
+                    }, 3000);
 
                 });
 
