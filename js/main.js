@@ -609,6 +609,7 @@ $(document).ready(function () {
                     height: globalWaveformHeight,
                     interact: false,
                     pixelRatio: 2,  // 1 for faster rendering
+                    fillParent: true,
                     minPxPerSec: 46.6 * globalCurrentZoomLevel,
                 });
 
@@ -656,6 +657,7 @@ $(document).ready(function () {
 
                     updateTrackEndSliderFromSavedData(globalMusicTracks.trackEndSliderPosition);
 
+                  
                     // ready event fires when waveform drwan but it takes few more secs.
                     // provide 2 sec before loading animation disappear.
                     setTimeout(function(){
@@ -1646,8 +1648,8 @@ $(document).ready(function () {
 
         }
 
-        // console.log('globalMusicTracks: ', globalMusicTracks);
-        // console.log('globalMusicTrackX: ', globalMusicTrackX);
+        console.log('globalMusicTracks: ', globalMusicTracks);
+        console.log('globalMusicTrackX: ', globalMusicTrackX);
     }
 
 
