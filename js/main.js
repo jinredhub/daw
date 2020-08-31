@@ -48,14 +48,23 @@ $(document).ready(function () {
         if(supportedOs === true && supportedBrowser === true){
             $('#combineTrackModal').css('display', 'flex');
         }else{
-            alert('Merging tracks works only on Chrome, Firefox and Edge desktop browswer.');
+            showErrorModal("Merging tracks works only on Chrome, Firefox and Edge desktop browswer.");
         }
     });
 
 
-    $('.closeCombineTrackModal').on('click', function () {
-        $('#combineTrackModal').css('display', 'none');
+    function showErrorModal(message){
+        $('.showErrorModalText').text(message);
+        $('#showErrorModal').css('display', 'flex');
+    }
+
+    $('.closeShowErrorModall').on('click', function () {
+        $('#showErrorModal').css('display', 'none');
     });
+
+    $('.closeMerginBrowserSupportModal').on('click', function(){
+        $('#merginBrowserSupportModal').css('display', 'none');
+    })
 
 
     $('.confirmCombineTrackButton').on('click', function () {
@@ -76,7 +85,7 @@ $(document).ready(function () {
             handleFilesSelect(audioFiles);
         }
         else {
-            alert('There are no tracks to combine.');
+            showErrorModal("There are no tracks to merge.");
         }
     });
 
@@ -686,7 +695,7 @@ $(document).ready(function () {
             }
             else {
                 // if wong extansion
-                alert('Please upload supported audio extensions: mp3, m4a, wav, ogg');
+                showErrorModal("Please upload supported audio extensions: mp3, m4a, wav, ogg");
 
                 return;
             }
@@ -1859,7 +1868,7 @@ $(document).ready(function () {
                     })
             })
             .catch(function (e) {
-                alert('Error: failed to merge tracks.');
+                showErrorModal("Error: failed to merge tracks.");
                 console.log(e)
             });
 
