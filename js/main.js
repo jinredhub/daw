@@ -64,7 +64,11 @@ $(document).ready(function () {
 
     $('.closeMerginBrowserSupportModal').on('click', function(){
         $('#merginBrowserSupportModal').css('display', 'none');
-    })
+    });
+
+    $('.closeCombineTrackModal').on('click', function(){
+        $('#combineTrackModal').css('display', 'none');
+    });
 
 
     $('.confirmCombineTrackButton').on('click', function () {
@@ -1648,8 +1652,8 @@ $(document).ready(function () {
 
         }
 
-        console.log('globalMusicTracks: ', globalMusicTracks);
-        console.log('globalMusicTrackX: ', globalMusicTrackX);
+        // console.log('globalMusicTracks: ', globalMusicTracks);
+        // console.log('globalMusicTrackX: ', globalMusicTrackX);
     }
 
 
