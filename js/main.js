@@ -18,6 +18,7 @@ $(document).ready(function () {
     let globalDeleteTrackId = null;
     let osName = '';
     let browserName = '';
+    let silentWaveformPlayerForIos = null;
 
     let setScrollInterval = null;
 
@@ -741,6 +742,11 @@ $(document).ready(function () {
 
 
     $('#playWaveFormButton').on('click', function () {
+        // for ios
+        if((globalIsPlaying === false && osName === 'iPhone') || (globalIsPlaying === false && osName === 'iPad')){
+            silentWaveformPlayerForIos.play();
+        }
+        
         // hide click here message
         $('#clickToPlayTooltip').css('display', 'none');
 
@@ -1573,6 +1579,33 @@ $(document).ready(function () {
     }
 
 
+    function loadSilentAudioForIos(){
+        // ios disables autoplay. It requires play to be initiated as part of a user interaction (ex, button click)
+        // and it looks like audio needs to right after user ineraction
+        // play this audio right away so that all tracks will play correctly even if there is no sound at the beginning
+
+        silentWaveformPlayerForIos = WaveSurfer.create({
+            container: '#temp',
+            scrollParent: false,
+            interact: false,
+            pixelRatio: 1,  // 1 for faster rendering
+        });
+
+        silentWaveformPlayerForIos.on('ready', function () {
+
+            // set volume to 0.5
+            silentWaveformPlayerForIos.setVolume('0.1');
+
+        });
+
+        silentWaveformPlayerForIos.load('./assets/beep.mp3');
+
+    }
+
+    loadSilentAudioForIos();
+
+
+
     function getTrackInfo() {
         // get total duration
         const trackEndSliderPosition = Number($('#trackEndSlider').css('left').split('px')[0]);
@@ -1665,8 +1698,8 @@ $(document).ready(function () {
 
         }
 
-        // console.log('globalMusicTracks: ', globalMusicTracks);
-        // console.log('globalMusicTrackX: ', globalMusicTrackX);
+        console.log('globalMusicTracks: ', globalMusicTracks);
+        console.log('globalMusicTrackX: ', globalMusicTrackX);
     }
 
 
