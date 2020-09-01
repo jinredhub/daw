@@ -581,10 +581,6 @@ $(document).ready(function () {
 
                     colorIndex++;
 
-                    // get rid of lag
-                    data.ws.playPause();
-                    data.ws.playPause();
-
                     // loading icon------------------------------------
                     $('#loading').css('display', 'none');
 
@@ -678,10 +674,6 @@ $(document).ready(function () {
                     updateUIfromSavedData(globalMusicTracks.tracks[i]);
 
                     updateTrackEndSliderFromSavedData(globalMusicTracks.trackEndSliderPosition);
-
-                    // get rid of lag
-                    globalMusicTracks.tracks[i].ws.playPause();
-                    globalMusicTracks.tracks[i].ws.playPause();
                   
                     // ready event fires when waveform drwan but it takes few more secs.
                     // provide 3 sec before loading animation disappear.
