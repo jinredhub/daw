@@ -104,7 +104,7 @@ section{
 .tooltip{
     position: relative;
 }
-.tooltip .tooltipText{
+.tooltipText{
     width: 270px;
     text-align: center;
     color: black;
@@ -122,13 +122,23 @@ section{
     content: "";
     position: absolute;
     top: 104%;
-    right: 25%;
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
     border-top: 10px solid #555;
     margin-left: -10px;
+}
+#clickToPlayTooltip:after{
+    right: 25%;
+}
+#moveTrackTooltip{
+    width: 300px;
+    left: 10px;
+    bottom: 135px;
+}
+#moveTrackTooltip:after{
+    left: 20px;
 }
 /* end tooltip---------------------------- */
 

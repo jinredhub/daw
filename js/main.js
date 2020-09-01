@@ -337,6 +337,11 @@ $(document).ready(function () {
 
             const targetId = that.id;
 
+            // hide tooltip
+            if(trackId === '398973ee-75fe-0562-a411-c570f2e3f81e'){
+                $(`#moveTrackTooltip`).hide();
+            }
+
             // calculate new cursor position
             // calculating diffrence between old mouse position and new mouse position
             if (e.type === 'touchmove') {
@@ -576,6 +581,10 @@ $(document).ready(function () {
 
                     colorIndex++;
 
+                    // get rid of lag
+                    data.ws.playPause();
+                    data.ws.playPause();
+
                     // loading icon------------------------------------
                     $('#loading').css('display', 'none');
 
@@ -593,9 +602,18 @@ $(document).ready(function () {
                 const duration = globalMusicTracks.tracks[i].duration;
 
                 // append new div
-                $('#mixingScrollDiv').append(`
-                    <div id='waveform${newId}' class='waveform' data-trackId='${newId}' data-drag='true'></div>
-                `);
+                if(i === 1){
+                    $('#mixingScrollDiv').append(`
+                        <div id='waveform${newId}' class='waveform' data-trackId='${newId}' data-drag='true'>
+                            <div class='tooltipText' id='moveTrackTooltip'>Move track around or clip the beginning</div>
+                        </div>
+                    `);
+                }
+                else{
+                    $('#mixingScrollDiv').append(`
+                        <div id='waveform${newId}' class='waveform' data-trackId='${newId}' data-drag='true'></div>
+                    `);
+                }
 
                 // resize container first
                 const newWaveformWidth = duration * 46.633;
@@ -661,6 +679,9 @@ $(document).ready(function () {
 
                     updateTrackEndSliderFromSavedData(globalMusicTracks.trackEndSliderPosition);
 
+                    // get rid of lag
+                    globalMusicTracks.tracks[i].ws.playPause();
+                    globalMusicTracks.tracks[i].ws.playPause();
                   
                     // ready event fires when waveform drwan but it takes few more secs.
                     // provide 3 sec before loading animation disappear.
