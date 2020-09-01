@@ -598,9 +598,18 @@ $(document).ready(function () {
                 const duration = globalMusicTracks.tracks[i].duration;
 
                 // append new div
-                $('#mixingScrollDiv').append(`
-                    <div id='waveform${newId}' class='waveform' data-trackId='${newId}' data-drag='true'></div>
-                `);
+                if(i === 1){
+                    $('#mixingScrollDiv').append(`
+                        <div id='waveform${newId}' class='waveform' data-trackId='${newId}' data-drag='true'>
+                            <div class='tooltipText' id='moveTrackTooltip'>Move track around or clip the beginning</div>
+                        </div>
+                    `);
+                }
+                else{
+                    $('#mixingScrollDiv').append(`
+                        <div id='waveform${newId}' class='waveform' data-trackId='${newId}' data-drag='true'></div>
+                    `);
+                }
 
                 // resize container first
                 const newWaveformWidth = duration * 46.633;
@@ -846,7 +855,7 @@ $(document).ready(function () {
 
 
     function compareAllTrackXThenPlayStop() {
-        const animateThisBarX = parseFloat($('#animateThisBar').css('left').split('px')[0]);
+        const animateThisBarX = Number($('#animateThisBar').css('left').split('px')[0]);
 
         // play
         for (let i = 0; i < globalMusicTrackX.length; i++) {
@@ -869,7 +878,7 @@ $(document).ready(function () {
         }
 
         // check trackEndSlider
-        const trackEndSliderPosition = $('#trackEndSlider').css('left').split('px')[0];
+        const trackEndSliderPosition = Number($('#trackEndSlider').css('left').split('px')[0]);
         if (animateThisBarX >= trackEndSliderPosition) {
             $('#playWaveFormButton').trigger('click');
         }
@@ -1658,11 +1667,6 @@ $(document).ready(function () {
 
         // console.log('globalMusicTracks: ', globalMusicTracks);
         // console.log('globalMusicTrackX: ', globalMusicTrackX);
-    }
-
-
-    function appendMoveTrackTooltip(){
-        // <div class='tooltipText' id='moveTrackTooltip'>Move track around or clip the beginning</div>
     }
 
 
