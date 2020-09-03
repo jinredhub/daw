@@ -105,13 +105,13 @@ section{
     position: relative;
 }
 .tooltipText{
-    width: 270px;
+    width: 160px;
     text-align: center;
     color: black;
     padding: 10px 0;
     position: absolute;
     bottom: 120%;
-    left: -173px;
+    left: -120px;
     display: block;
     border: 2px solid #ffb161;
     border-radius: 5px;
@@ -127,7 +127,7 @@ section{
     left: 10px;
     top: 40px;
     height: 42px;
-    width: 120px;
+    width: 140px;
 }
 .tooltipText:after{
     content: "";
@@ -141,7 +141,7 @@ section{
 }
 #clickToPlayTooltip:after{
     top: 104%;
-    right: 25%;
+    right: 5%;
 }
 #moveTrackTooltip:after{
     top: 104%;
