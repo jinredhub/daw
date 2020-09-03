@@ -116,12 +116,22 @@ section{
     border: 2px solid #ffb161;
     border-radius: 5px;
     background-color: white;
-    z-index: 10;
+    z-index: 4;
+}
+#moveTrackTooltip{
+    width: 300px;
+    left: 10px;
+    bottom: 135px;
+}
+#clickTrackDetailTooltip{
+    left: 10px;
+    top: 40px;
+    height: 42px;
+    width: 120px;
 }
 .tooltipText:after{
     content: "";
     position: absolute;
-    top: 104%;
     width: 0;
     height: 0;
     border-left: 10px solid transparent;
@@ -130,15 +140,21 @@ section{
     margin-left: -10px;
 }
 #clickToPlayTooltip:after{
+    top: 104%;
     right: 25%;
 }
-#moveTrackTooltip{
-    width: 300px;
-    left: 10px;
-    bottom: 135px;
-}
 #moveTrackTooltip:after{
-    left: 20px;
+    top: 104%;
+    left: 14px;
+}
+#clickTrackDetailTooltip:after{
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 0;
+    border-bottom: 10px solid #555;
+    margin-left: -10px;
+    bottom: 104%;
+    left: 20px;    
 }
 /* end tooltip---------------------------- */
 

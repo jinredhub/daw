@@ -1211,6 +1211,9 @@ $(document).ready(function () {
 
 
     $('#showHideTrackDetailPanelButton').on('click', function (e) {
+        // hide tooltip
+        $('#clickTrackDetailTooltip').hide();
+
         $('#trackDetailPanel').show();
 
         // set width 100% or 300px
