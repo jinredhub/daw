@@ -124,7 +124,7 @@ section{
     bottom: 135px;
 }
 #clickTrackDetailTooltip{
-    left: 10px;
+    left: 8px;
     top: 40px;
     height: 42px;
     width: 140px;
@@ -145,7 +145,7 @@ section{
 }
 #moveTrackTooltip:after{
     top: 104%;
-    left: 14px;
+    left: 20px;
 }
 #clickTrackDetailTooltip:after{
     border-left: 10px solid transparent;
@@ -154,7 +154,7 @@ section{
     border-bottom: 10px solid #555;
     margin-left: -10px;
     bottom: 104%;
-    left: 20px;    
+    left: 12px;    
 }
 /* end tooltip---------------------------- */
 
