@@ -45,27 +45,74 @@ section{
     z-index: 50;
 }
 
-#navbar{
+
+/* navbar======================================== */
+.navbar{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.navbar .desktop, .navbar .mobile{
     height: 70px;
     border-bottom: 1px solid black;
     background-color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
-    left: 0;
-    top: 0;
-    z-index: 100;
+    position: relative;
 }
-#navbar a{
+.navbar .desktop a{
     color: #989898;
-    padding: 12px 10px;
+    padding: 12px 16px;
     font-weight: bold;
     text-decoration: none;
 }
-#navbar .active{
-    color: #3b3b3b;
+.navbar .active{
+    color: #3b3b3b !important;
 }
+
+.navbar .mobile{
+    display: none;
+}
+.navbar .mobildLinks{
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    border-bottom: 1px solid black;
+}
+.navbar .mobildLinks a{
+    color: #989898;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+    background-color: #fcfbfa;
+    font-weight: bold;
+}
+.navbar .mobildLinks a:hover{
+    background-color: #e2e2e2;
+}
+.navbar .hamburgerIcon{
+    padding: 14px 16px;
+    font-size: 17px;
+    color: #1b1c1d;
+    border: none;
+    background-color: transparent;
+}
+
+/*media query----------------------------------------*/
+/*tablets*/
+@media (max-width: 768px){
+   .navbar .desktop{
+       display: none;
+   }
+   .navbar .mobile{
+       display: flex;
+       justify-content: flex-end;
+   }
+}
+/* end navbar======================================== */
 
 
 #downloadFinalTrack{
