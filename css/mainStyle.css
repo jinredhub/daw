@@ -205,6 +205,35 @@ section{
 }
 /* end tooltip---------------------------- */
 
+/* hoverTooltip---------------------------- */
+.hoverTooltipText{
+    width: 150px;
+    text-align: center;
+    color: white;
+    padding: 6px 0;
+    position: absolute;
+    bottom: -55%;
+    display: block;
+    border: none;
+    border-radius: 5px;
+    background-color: #555;
+    z-index: 5;
+    opacity: 0;
+    transition: opacity 0.8s;
+}
+#importNewAudioTooltip{
+    left: 0;
+}
+#exportAudioTooltip{
+    right: 0;
+}
+.tooltip:hover #importNewAudioTooltip{
+    opacity: 1;
+}
+.tooltip:hover #exportAudioTooltip{
+    opacity: 1;
+}
+/* end hoverTooltip---------------------------- */
 
 /*custom input file---------------*/
 .inputfile{

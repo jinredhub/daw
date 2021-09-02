@@ -56,9 +56,13 @@
         <div class="tabcontent">
             <!-- controller -->
             <div class='disp-flex justify-content--space-between' id='hideButtonDiv'>
-                <div class='disp-flex topLeftButtonDiv'>    
-                    <input type="file" name="addNewAudioFile" id="addNewAudioFile" class="inputfile" data-multiple-caption="{count} files selected" />
-                    <label for="addNewAudioFile" class='roundButton addNewAudioFileLabel'><span><i class="fas fa-upload"></i></span></label>
+                <div class='disp-flex topLeftButtonDiv'>  
+                    <div class='tooltip'>
+                        <input type="file" name="addNewAudioFile" id="addNewAudioFile" class="inputfile" data-multiple-caption="{count} files selected" />
+                        <label for="addNewAudioFile" class='roundButton addNewAudioFileLabel'><span><i class="fas fa-upload"></i></span></label>
+                        <div class='hoverTooltipText' id='importNewAudioTooltip'>Add a track</div>
+                    </div>
+                    
                     
                     <button type='button' class='btn zoomOut roundButton' disabled><i class="fas fa-search-minus"></i></button>
                     <button type='button' class='btn zoomIn roundButton' disabled><i class="fas fa-search-plus"></i></button>
@@ -68,7 +72,10 @@
                         <button type='button' id='playWaveFormButton' class='btn roundButton' disabled><i class="fas fa-play" style="font-size: 14px"></i></button>
                         <div class='tooltipText' id='clickToPlayTooltip'>Play mixed tracks</div>
                     </div>
-                    <button type='button' id='openCombineTracksModal' class='btn roundButton' disabled><i class="fas fa-cloud-upload-alt"></i></button>
+                    <div class='tooltip'>
+                        <button type='button' id='openCombineTracksModal' class='btn roundButton' disabled><i class="fas fa-cloud-upload-alt"></i></button>
+                        <div class='hoverTooltipText' id='exportAudioTooltip'>Export</div>
+                    </div>
                 </div>
             </div>
             
@@ -120,8 +127,8 @@
                 Are you sure you want to delete <span id='deleteTrackTitle'></span>?
             </div>
             <div class='allButtonDiv'>
-                <button type='button' class='btn btn-primary confirmDeleteTrackButton'>Delete</button>
                 <button type='button' class='btn closeDeleteTrackModal'>Cancel</button>
+                <button type='button' class='btn btn-primary confirmDeleteTrackButton'>Delete</button>
             </div>
         </div>
     </div>
@@ -133,8 +140,8 @@
                 Are you ready to merge all tracks?
             </div>
             <div class='allButtonDiv'>
-                <button type='button' class='btn btn-primary confirmCombineTrackButton'>Yes</button>
                 <button type='button' class='btn closeCombineTrackModal'>No</button>
+                <button type='button' class='btn btn-primary confirmCombineTrackButton'>Yes</button>
             </div>
         </div>
     </div>
