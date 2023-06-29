@@ -1,250 +1,246 @@
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    font-family: 'Quicksand', sans-serif;
-    background-color: #b2b7d2;
+body {
+  font-family: "Quicksand", sans-serif;
+  background-color: #b2b7d2;
 }
-section{
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 10px;
-}
-
-  
-.tabcontent{
-    padding: 6px 0;
-    border: none;
-    background-color: white;
-    box-shadow: 0 8px 30px rgb(0,0,0,0.2);
-    border-radius: 10px;
-    padding: 50px 20px;  
-    padding-top: 60px;
-    top: 0;
-    margin: 60px 0;
-    /* need this to hide trackDetailPanel */
-    overflow-x: hidden;
+section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
-#loading{
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    font-size: 100px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    color: #4f4f4f;
-    z-index: 50;
+.tabcontent {
+  padding: 6px 0;
+  border: none;
+  background-color: white;
+  box-shadow: 0 8px 30px rgb(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 50px 20px;
+  padding-top: 60px;
+  top: 0;
+  margin: 60px 0;
+  /* need this to hide trackDetailPanel */
+  overflow-x: hidden;
 }
 
+#loading {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  color: #4f4f4f;
+  z-index: 50;
+}
 
 /* navbar======================================== */
-.navbar{
-    position: sticky;
-    top: 0;
-    z-index: 100;
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-.navbar .desktop, .navbar .mobile{
-    height: 70px;
-    border-bottom: 1px solid black;
-    background-color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
+.navbar .desktop,
+.navbar .mobile {
+  height: 70px;
+  border-bottom: 1px solid black;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 }
-.navbar .desktop a{
-    color: #989898;
-    padding: 12px 16px;
-    font-weight: bold;
-    text-decoration: none;
+.navbar .desktop a {
+  color: #989898;
+  padding: 12px 16px;
+  font-weight: bold;
+  text-decoration: none;
 }
-.navbar .active{
-    color: #3b3b3b !important;
+.navbar .active {
+  color: #3b3b3b !important;
 }
 
-.navbar .mobile{
-    display: none;
+.navbar .mobile {
+  display: none;
 }
-.navbar .mobildLinks{
-    display: none;
-    position: absolute;
-    width: 100%;
-    top: 100%;
-    border-bottom: 1px solid black;
+.navbar .mobildLinks {
+  display: none;
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  border-bottom: 1px solid black;
 }
-.navbar .mobildLinks a{
-    color: #989898;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-    display: block;
-    background-color: #fcfbfa;
-    font-weight: bold;
+.navbar .mobildLinks a {
+  color: #989898;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  display: block;
+  background-color: #fcfbfa;
+  font-weight: bold;
 }
-.navbar .mobildLinks a:hover{
-    background-color: #e2e2e2;
+.navbar .mobildLinks a:hover {
+  background-color: #e2e2e2;
 }
-.navbar .hamburgerIcon{
-    padding: 14px 16px;
-    font-size: 17px;
-    color: #1b1c1d;
-    border: none;
-    background-color: transparent;
+.navbar .hamburgerIcon {
+  padding: 14px 16px;
+  font-size: 17px;
+  color: #1b1c1d;
+  border: none;
+  background-color: transparent;
 }
 
 /*media query----------------------------------------*/
 /*tablets*/
-@media (max-width: 768px){
-   .navbar .desktop{
-       display: none;
-   }
-   .navbar .mobile{
-       display: flex;
-       justify-content: flex-end;
-   }
+@media (max-width: 768px) {
+  .navbar .desktop {
+    display: none;
+  }
+  .navbar .mobile {
+    display: flex;
+    justify-content: flex-end;
+  }
 }
 /* end navbar======================================== */
 
-
-#downloadFinalTrack{
-    background-color: #98b31a;
-    color: white;
+#downloadFinalTrack {
+  background-color: #98b31a;
+  color: white;
 }
 
-#questionButton{
-    border-radius: 100px;
-    border: 1px solid #b7b7b7;
-    width: 36px;
-    height: 36px;
-    font-size: 12px;
-    background-color: white;
-    color: black;
-    cursor: pointer;
-    margin-right: 16px;
+#questionButton {
+  border-radius: 100px;
+  border: 1px solid #b7b7b7;
+  width: 36px;
+  height: 36px;
+  font-size: 12px;
+  background-color: white;
+  color: black;
+  cursor: pointer;
+  margin-right: 16px;
 }
 
-#builtBy{
-    border-top: 1px solid #646464;
-    color: #c5c5c5;
-    padding-top: 10px;
-    margin-top: 10px;
-    font-weight: bold;
+#builtBy {
+  border-top: 1px solid #646464;
+  color: #c5c5c5;
+  padding-top: 10px;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
-.link{
-    color: #98b31a;
-    text-decoration: none;
-    font-weight: bold;
+.link {
+  color: #98b31a;
+  text-decoration: none;
+  font-weight: bold;
 }
-
 
 /* tooltip---------------------------- */
-.tooltip{
-    position: relative;
+.tooltip {
+  position: relative;
 }
-.tooltipText{
-    width: 160px;
-    text-align: center;
-    color: black;
-    padding: 10px 0;
-    position: absolute;
-    bottom: 120%;
-    left: -120px;
-    display: block;
-    border: 2px solid #ffb161;
-    border-radius: 5px;
-    background-color: white;
-    z-index: 4;
+.tooltipText {
+  width: 160px;
+  text-align: center;
+  color: black;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 120%;
+  left: -120px;
+  display: block;
+  border: 2px solid #ffb161;
+  border-radius: 5px;
+  background-color: white;
+  z-index: 4;
 }
-#moveTrackTooltip{
-    width: 300px;
-    left: 10px;
-    bottom: 135px;
+#moveTrackTooltip {
+  width: 300px;
+  left: 10px;
+  bottom: 135px;
 }
-#clickTrackDetailTooltip{
-    left: 8px;
-    top: 40px;
-    height: 42px;
-    width: 140px;
+#clickTrackDetailTooltip {
+  left: 8px;
+  top: 40px;
+  height: 42px;
+  width: 140px;
 }
-.tooltipText:after{
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 10px solid #555;
-    margin-left: -10px;
+.tooltipText:after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #555;
+  margin-left: -10px;
 }
-#clickToPlayTooltip:after{
-    top: 104%;
-    right: 5%;
+#clickToPlayTooltip:after {
+  top: 104%;
+  right: 5%;
 }
-#moveTrackTooltip:after{
-    top: 104%;
-    left: 20px;
+#moveTrackTooltip:after {
+  top: 104%;
+  left: 20px;
 }
-#clickTrackDetailTooltip:after{
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-top: 0;
-    border-bottom: 10px solid #555;
-    margin-left: -10px;
-    bottom: 104%;
-    left: 12px;    
+#clickTrackDetailTooltip:after {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-top: 0;
+  border-bottom: 10px solid #555;
+  margin-left: -10px;
+  bottom: 104%;
+  left: 12px;
 }
 /* end tooltip---------------------------- */
 
 /* hoverTooltip---------------------------- */
-.hoverTooltipText{
-    width: 150px;
-    text-align: center;
-    color: white;
-    padding: 6px 0;
-    position: absolute;
-    bottom: -55%;
-    display: block;
-    border: none;
-    border-radius: 5px;
-    background-color: #555;
-    z-index: 5;
-    opacity: 0;
-    transition: opacity 0.8s;
+.hoverTooltipText {
+  width: 150px;
+  text-align: center;
+  color: white;
+  padding: 6px 0;
+  position: absolute;
+  bottom: -55%;
+  display: block;
+  border: none;
+  border-radius: 5px;
+  background-color: #555;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.8s;
 }
-#importNewAudioTooltip{
-    left: 0;
+#importNewAudioTooltip {
+  left: 0;
 }
-#exportAudioTooltip{
-    right: 0;
+#exportAudioTooltip {
+  right: 0;
 }
-.tooltip:hover #importNewAudioTooltip{
-    opacity: 1;
+.tooltip:hover #importNewAudioTooltip {
+  opacity: 1;
 }
-.tooltip:hover #exportAudioTooltip{
-    opacity: 1;
+.tooltip:hover #exportAudioTooltip {
+  opacity: 1;
 }
 /* end hoverTooltip---------------------------- */
 
 /*custom input file---------------*/
-.inputfile{
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-  }
-  /* .inputfile + label {
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+/* .inputfile + label {
     font-size: 1.1rem;
     font-weight: normal;
     color: black;
@@ -255,484 +251,483 @@ section{
     text-align: center;
     border-radius: 5px;
   } */
-  
-  .inputfile:focus + label,
-  .inputfile + label:hover {
-    background-color: #F59D18;
-    color: white;
-  }
-  
-  .inputfile:focus + label {
-    outline: 1px dotted #000;
-    outline: -webkit-focus-ring-color auto 5px;
-  }
-  .inputfile + label * {
-    pointer-events: none;
-  }
-  /*end custom input file--------------*/
-  
 
+.inputfile:focus + label,
+.inputfile + label:hover {
+  background-color: #f59d18;
+  color: white;
+}
 
-  /* modal============================================== */
-.allModal{
-    width: 100%;
-    height: 100%;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 10;
-    overflow: auto;
+.inputfile:focus + label {
+  outline: 1px dotted #000;
+  outline: -webkit-focus-ring-color auto 5px;
 }
-.allModal .all-modal-content{
-    background-color: white;
-    padding: 38px 30px;
-    width: 90%;
-    font-size: 16px;
-    box-shadow: 1px 1px 20px 2px;
-    border-radius: 10px;
-    max-width: 500px;
-    min-width: 165px;
-    position: relative;
-    display: inline-block;
-    text-align: left;
+.inputfile + label * {
+  pointer-events: none;
 }
-.allModal .modalHeader{
-    margin-bottom: 10px;
-    font-weight: bold;
-    text-align: left;
+/*end custom input file--------------*/
+
+/* modal============================================== */
+.allModal {
+  width: 100%;
+  height: 100%;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  overflow: auto;
 }
-.allModal .modal .buttonDiv{
-    padding-top: 20px;
-    text-align: center;
+.allModal .all-modal-content {
+  background-color: white;
+  padding: 38px 30px;
+  width: 90%;
+  font-size: 16px;
+  box-shadow: 1px 1px 20px 2px;
+  border-radius: 10px;
+  max-width: 500px;
+  min-width: 165px;
+  position: relative;
+  display: inline-block;
+  text-align: left;
 }
-.allModal .allButtonDiv{
-    padding-top: 20px;
-    text-align: center;
+.allModal .modalHeader {
+  margin-bottom: 10px;
+  font-weight: bold;
+  text-align: left;
 }
-.allModal .closeModal{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 40px;
-    height: 40px;
-    border-radius: 100px;
-    border: 1px solid gray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    background-color: #e4e4e4;
+.allModal .modal .buttonDiv {
+  padding-top: 20px;
+  text-align: center;
+}
+.allModal .allButtonDiv {
+  padding-top: 20px;
+  text-align: center;
+}
+.allModal .closeModal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  border: 1px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  background-color: #e4e4e4;
 }
 /* end modal============================================== */
 
-
-
 /* mixing ======================================================== */
-#showHideTrackDetailPanelButton{
-    width: 28px;
-    height: 28px;
-    justify-content: center;
-    align-items: center;
-    background-color: #6e9ad2;
-    position: absolute;
-    top: 0;
-    left: 0;
-    border: none;
-    z-index: 6;
-    color: white;
-    display: none;
+#showHideTrackDetailPanelButton {
+  width: 28px;
+  height: 28px;
+  justify-content: center;
+  align-items: center;
+  background-color: #6e9ad2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: none;
+  z-index: 6;
+  color: white;
+  display: none;
+  cursor: pointer;
 }
-#mixingContainer{
-    overflow-x: auto;
-    overflow-y: hidden;
-    position: relative;
-    margin-top: 30px;
-    border-bottom: 1px solid #e6e6e6;
+#mixingContainer {
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: relative;
+  margin-top: 30px;
+  border-bottom: 1px solid #e6e6e6;
 }
-#mixingScrollDiv{
-    width: 2000px;
-    position: relative;
-    transform-origin: 0 0;
-    z-index: 3;
+#mixingScrollDiv {
+  width: 2000px;
+  position: relative;
+  transform-origin: 0 0;
+  z-index: 3;
 }
-.wf{
-    margin: 10px 12px;
+.wf {
+  margin: 10px 12px;
 }
-.waveform{
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: ew-resize;
-    z-index: 4;
+.waveform {
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: ew-resize;
+  z-index: 4;
 }
-.waveform wave{
-    overflow-x: hidden !important;
-    z-index: 4;
-
+.waveform wave {
+  overflow-x: hidden !important;
+  z-index: 4;
 }
-#animateThisBar{
-    width: 6px;
-    height: 100px;
-    position: absolute;
-    background-color: #b5d2b5;
-    top: 0;
-    left: 0;
-    z-index: 5;
-    border-radius: 10px;
+#animateThisBar {
+  width: 6px;
+  height: 100px;
+  position: absolute;
+  background-color: #b5d2b5;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  border-radius: 10px;
 }
-#animateThisBarHandle{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 6;
-    width: 20px;
-    height: 29px;
-    background-color: white;
-    cursor: ew-resize;
-    transform: translateX(-6px);
-    border: 1px solid #949494;
-    border-radius: 3px;
-    transform-origin: left;
+#animateThisBarHandle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  width: 20px;
+  height: 29px;
+  background-color: white;
+  cursor: ew-resize;
+  transform: translateX(-6px);
+  border: 1px solid #949494;
+  border-radius: 3px;
+  transform-origin: left;
 }
-.leftTrim{
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    z-index: 5;
-    background-color: rgba(0, 0, 0, 0.7);
+.leftTrim {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0.7);
 }
-.rightTrim{
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    z-index: 5;
-    background-color: rgba(0, 0, 0, 0.7);
+.rightTrim {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  z-index: 5;
+  background-color: rgba(0, 0, 0, 0.7);
 }
-#trackEndSliderContainer{
-    width: 100%;
-    height: 28px;
-    background-color: transparent;
-    position: absolute;
-    user-select: none;
-    touch-action: none;
+#trackEndSliderContainer {
+  width: 100%;
+  height: 28px;
+  background-color: transparent;
+  position: absolute;
+  user-select: none;
+  touch-action: none;
 }
-#trackEndSlider{
-    width: 36px;
-    height: 28px;
-    border-radius: 4px;
-    background-color: white;
-    border: 1px solid #949494;
-    position: absolute;
-    top: 0;
-    left: 10px;
-    z-index: 5;
-    cursor: ew-resize;
-    transform-origin: left;
+#trackEndSlider {
+  width: 36px;
+  height: 28px;
+  border-radius: 4px;
+  background-color: white;
+  border: 1px solid #949494;
+  position: absolute;
+  top: 0;
+  left: 10px;
+  z-index: 5;
+  cursor: ew-resize;
+  transform-origin: left;
 }
-#activeTrackDiv{
-    height: 28px;
-    width: 200px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.1)
-}
-
-.trimSliderContainer{
-    width: 100%;
-    height: 10px;
-    background-color: transparent;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    user-select: none;
-    touch-action: none;
-    z-index: 6;
-    border-radius: 2px;
-}
-.trackLeftTrimSlider, .trackRightTrimSlider{
-    position: absolute;
-    top: 0;
-    width: 35px;
-    height: 30px;
-    transform-origin: left;
-    transform: scale(1, 1) translate(-15px, -8px);
-    border: 1px solid #949494;
-    border-radius: 3px;
-    background-color: white;
-    cursor: default;
-}
-.trackLeftTrimSlider{
-    left: 0;
-    z-index: 6;
-}
-.trackRightTrimSlider{
-    left: 100%;
-    z-index: 7;
+#activeTrackDiv {
+  height: 28px;
+  width: 200px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-.tackTitleAboveWaveform{
-    width: 100%;
-    min-width: 1000px;
-    height: 20px;
-    background-color: transparent;
-    position: absolute;
-    top: -20px;
-    left: 0;
-    color: #969696;
-    transform-origin: left;
-    display: flex;
-    align-items: flex-end;
+.trimSliderContainer {
+  width: 100%;
+  height: 10px;
+  background-color: transparent;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  user-select: none;
+  touch-action: none;
+  z-index: 6;
+  border-radius: 2px;
+}
+.trackLeftTrimSlider,
+.trackRightTrimSlider {
+  position: absolute;
+  top: 0;
+  width: 35px;
+  height: 30px;
+  transform-origin: left;
+  transform: scale(1, 1) translate(-15px, -8px);
+  border: 1px solid #949494;
+  border-radius: 3px;
+  background-color: white;
+  cursor: default;
+}
+.trackLeftTrimSlider {
+  left: 0;
+  z-index: 6;
+}
+.trackRightTrimSlider {
+  left: 100%;
+  z-index: 7;
 }
 
-.verticalTrackBeginLine, .verticalTrackEndLine{
-    width: 2px;
-    height: 100px;
-    position: absolute;
-    top: 19px;
-    z-index: 2;
-    left: 0;
+.tackTitleAboveWaveform {
+  width: 100%;
+  min-width: 1000px;
+  height: 20px;
+  background-color: transparent;
+  position: absolute;
+  top: -20px;
+  left: 0;
+  color: #969696;
+  transform-origin: left;
+  display: flex;
+  align-items: flex-end;
 }
 
-.lockIconAboveWaveform{
-    padding: 20px 10px 2px 10px;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-}
-.lockIconAboveWaveform:hover{
-    cursor: pointer;
+.verticalTrackBeginLine,
+.verticalTrackEndLine {
+  width: 2px;
+  height: 100px;
+  position: absolute;
+  top: 19px;
+  z-index: 2;
+  left: 0;
 }
 
-.waveformOverlay{
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 4;
+.lockIconAboveWaveform {
+  padding: 20px 10px 2px 10px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.lockIconAboveWaveform:hover {
+  cursor: pointer;
+}
+
+.waveformOverlay {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 4;
 }
 /* end mixing===================================================== */
 
-
 /* button on the top============================================= */
-.roundButton{
-    width: 40px;
-    height: 40px;
-    border-radius: 100px;
-    display: flex !important;
-    justify-content: center;
-    align-items: center;
-    padding: 0 !important;
-    background-color: #dadada !important;
-    color: black !important;
-    border: none;
+.roundButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  padding: 0 !important;
+  background-color: #dadada !important;
+  color: black !important;
+  border: none;
+  cursor: pointer !important;
 }
 
-#openCombineTracksModal{
-    border: 3px solid #e67474;
+#openCombineTracksModal {
+  border: 3px solid #e67474;
 }
-#openCombineTracksModal, .zoomOut, .zoomIn{
-    margin-left: 10px;
+#openCombineTracksModal,
+.zoomOut,
+.zoomIn {
+  margin-left: 10px;
 }
-#openCombineTracksModal, .zoomOut, .zoomIn, #playWaveFormButton{
-    opacity: 0.5;
+#openCombineTracksModal,
+.zoomOut,
+.zoomIn,
+#playWaveFormButton {
+  opacity: 0.5;
 }
 
-#titleInput{
-    width: 100%;
-    border: none;
-    padding: 6px;
-    margin-bottom: 20px;
+#titleInput {
+  width: 100%;
+  border: none;
+  padding: 6px;
+  margin-bottom: 20px;
 }
-#titleInput:focus{
-    outline: none;
+#titleInput:focus {
+  outline: none;
 }
 /* end button on the top============================================= */
 
-
 /* trackDetailPanel============================================ */
-#appendDetailHere{
-    padding-top: 30px;
+#appendDetailHere {
+  padding-top: 30px;
 }
-#trackDetailPanel{
-    position: absolute;
-    left: -100%;
-    width: 300px;
-    z-index: 7;
-    transition: left 0.5s;
-    background-color: #636262;
-    border-radius: 0 0 8px 0;
-    display: none;
+#trackDetailPanel {
+  position: absolute;
+  left: -100%;
+  width: 300px;
+  z-index: 7;
+  transition: left 0.5s;
+  background-color: #636262;
+  border-radius: 0 0 8px 0;
+  display: none;
 }
-#trackDetailPanelTopDiv{
-    background-color: transparent;
-    height: 30px;
-    border-bottom: 1px solid #8a8a8a;
+#trackDetailPanelTopDiv {
+  background-color: transparent;
+  height: 30px;
+  border-bottom: 1px solid #8a8a8a;
 }
-.trackDetailListItem{
-    height: 80px;
-    padding: 8px 20px;
-    background-color: transparent;
-    border-bottom: 1px solid #8a8a8a;
+.trackDetailListItem {
+  height: 80px;
+  padding: 8px 20px;
+  background-color: transparent;
+  border-bottom: 1px solid #8a8a8a;
 }
-.trackDetailListItem .trackTitleInput{
-    background-color: transparent;
-    color: #d9d9d9;
-    border: none;
-    width: 100%;
-    padding: 2px;
-    border-radius: 4px;
+.trackDetailListItem .trackTitleInput {
+  background-color: transparent;
+  color: #d9d9d9;
+  border: none;
+  width: 100%;
+  padding: 2px;
+  border-radius: 4px;
 }
-.trackDetailListItem .trackTitleInput::placeholder{
-    color: #a5a5a5;
+.trackDetailListItem .trackTitleInput::placeholder {
+  color: #a5a5a5;
 }
-.trackDescription{
-    width: 100%;
-    background-color: #ffffff17;
-    border-radius: 4px;
-    color: #d9d9d9;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    appearance: none !important;
-    box-shadow: none;
-    border: 1px solid #808080;
-    padding: 4px;
+.trackDescription {
+  width: 100%;
+  background-color: #ffffff17;
+  border-radius: 4px;
+  color: #d9d9d9;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  box-shadow: none;
+  border: 1px solid #808080;
+  padding: 4px;
 }
-.trackDescription::placeholder{
-    color: #a5a5a5;
+.trackDescription::placeholder {
+  color: #a5a5a5;
 }
-.instrumentDetailSelect{
-    color: #d9d9d9;
-    width: 160px;
-    box-shadow: none;
-    border: 1px solid #808080;
-    border-radius: 3px;
-    padding: 1px;
-    -webkit-appearance: none !important;
-    -moz-appearance: none !important;
-    appearance: none !important;
-    background: url('../images/icons/arrow-down.png') 96% / 10% no-repeat transparent;
+.instrumentDetailSelect {
+  color: #d9d9d9;
+  width: 160px;
+  box-shadow: none;
+  border: 1px solid #808080;
+  border-radius: 3px;
+  padding: 1px;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  appearance: none !important;
+  background: url("../images/icons/arrow-down.png") 96% / 10% no-repeat
+    transparent;
 }
-.instrumentDetailSelect option{
-    color: #636262;
+.instrumentDetailSelect option {
+  color: #636262;
 }
-.muteButton{
-    width: 28px;
-    height: 28px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0;
-    margin-left: 10px;
-    background-color: transparent !important;
+.muteButton {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  margin-left: 10px;
+  background-color: transparent !important;
 }
-.deleteTrackButton{
-    width: 26px;
-    height: 20px;
-    background-color: transparent !important;
+.deleteTrackButton {
+  width: 26px;
+  height: 20px;
+  background-color: transparent !important;
 }
-.volumeSlider{
-    -webkit-appearance: none;
-    width: 125px;
-    height: 6px;
-    border-radius: 5px;  
-    background: #d3d3d3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
+.volumeSlider {
+  -webkit-appearance: none;
+  width: 125px;
+  height: 6px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
 }
 .volumeSlider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 15px;
-    height: 15px;
-    border-radius: 50%; 
-    background: #969696;
-    cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #969696;
+  cursor: pointer;
 }
 .volumeSlider::-moz-range-thumb {
-    width: 15px;
-    height: 15px;
-    border-radius: 50%;
-    background: #969696;
-    cursor: pointer;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #969696;
+  cursor: pointer;
 }
-#closeTrackDetailPanelButton{
-    width: 28px;
-    height: 28px;
-    background-color: #6e9ad2;
-    color: white;
-    border: none;
-    margin-right: 1px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#closeTrackDetailPanelButton {
+  width: 28px;
+  height: 28px;
+  background-color: #6e9ad2;
+  color: white;
+  border: none;
+  margin-right: 1px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
-.flex-wrap-nowrap{
-    flex-wrap: nowrap !important;
+.flex-wrap-nowrap {
+  flex-wrap: nowrap !important;
 }
 /* end trackDetailPanel============================================ */
 
-
-
 /* track is empty================================== */
-#trackIsEmptyDiv{
-    text-align: center;
+#trackIsEmptyDiv {
+  text-align: center;
 }
-#trackIsEmptyDiv h3{
-    font-size: 32px;
+#trackIsEmptyDiv h3 {
+  font-size: 32px;
 }
-#trackIsEmptyDiv img{
-    width: 70%;    
+#trackIsEmptyDiv img {
+  width: 70%;
 }
 /* end track is empty================================== */
 
-
-
 /* footer ======================================== */
-#footer{
-    color: #626262;
-    height: 130px;
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-top: 1px solid black;
+#footer {
+  color: #626262;
+  height: 130px;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-top: 1px solid black;
 }
-#footer a{
-    border-radius: 100px !important;
-    padding: 13px 16px !important;
-    font-size: 18px !important;
-    color: white !important;
+#footer a {
+  border-radius: 100px !important;
+  padding: 13px 16px !important;
+  font-size: 18px !important;
+  color: white !important;
 }
-#footer .linkedin{
-    background-color: #007bff;
+#footer .linkedin {
+  background-color: #007bff;
 }
-#footer .linkedin:hover{
-    background-color: #0069b9;
+#footer .linkedin:hover {
+  background-color: #0069b9;
 }
-#footer .linkedin:active{
-    background-color: #015a9e;
+#footer .linkedin:active {
+  background-color: #015a9e;
 }
-#footer .github{
-    background-color: white;
+#footer .github {
+  background-color: white;
 }
-#footer .github:hover{
-    background-color: #e0e0e0;
+#footer .github:hover {
+  background-color: #e0e0e0;
 }
-#footer .github:active{
-    background-color: #d3d3d3;
+#footer .github:active {
+  background-color: #d3d3d3;
 }
-
